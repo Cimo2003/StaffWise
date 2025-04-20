@@ -12,6 +12,7 @@ import { Faculty } from "@/lib/types";
 export default async function Page() {
     const { user_id } = await getToken()
     const faculty: Faculty = await getUserFaculty(user_id)
+    console.log(faculty)
     return <>
         {
             faculty?

@@ -1,14 +1,8 @@
 "use server"
+import { revalidatePath } from "next/cache"
 import { axiosInstance } from "./axios"
 
-export async function register(formData:FormData) {
-    const data = {
-        firstName: formData.get("firstName"),
-        lastName: formData.get("lastName"),
-        phone: formData.get("phone"),
-        password: formData.get("password"),
-        email: formData.get("email"),
-    }
+export async function register(data:any) {
     console.log(data)
     try{
         const res = await fetch("http://localhost:8085/users/register", {
@@ -17,11 +11,40 @@ export async function register(formData:FormData) {
             body: JSON.stringify(data)
         })
         console.log(res.status)
-        if(res.ok) return { success: true }
+        if(res.ok) {
+            revalidatePath("/")
+            return { success: true }
+        }
         return { success: false }
     }
     catch (e) {
         console.log(e)
         return { success: false }
     }
+}
+
+export async function updateUser(data:any) {
+    const res = await axiosInstance.patch("/users", data)
+    if(res.status===200){
+        revalidatePath("/")
+        return { success: true }
+    }
+    else return { success: false }
+}
+
+export async function deleteUser(userId:number) {
+    const res = await axiosInstance.delete(`/users/${userId}`)
+    if(res.status===200){
+        revalidatePath("/")
+        return { success: true }
+    }
+    else return { success: false }
+}
+
+export async function getFacultyTeachers(facultyId:number) {
+    const res = await axiosInstance.get(`/faculties/${facultyId}/users`)
+    if(res.status===200){
+        return res.data
+    }
+    else return []
 }

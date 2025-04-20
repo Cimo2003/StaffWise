@@ -1,23 +1,22 @@
 import { DataTable } from "@/components/data-table";
 import { columns } from "./columns";
-import AddProfessor from "./addProfessor";
-import { getToken } from "@/api/auth";
 import { getUserFaculty } from "@/api/faculty";
-import { Faculty, MyUser, User } from "@/lib/types";
-import { getFacultyTeachers } from "@/api/users";
+import { getToken } from "@/api/auth";
+import { Faculty, MyUser, Subject } from "@/lib/types";
+import { getFacultySubjects } from "@/api/subjects";
+import AddSubject from "./addSubject";
 
 export default async function Page() {
     const user: MyUser = await getToken()
     const faculty: Faculty = await getUserFaculty(user.user_id)
-    const teachers: User[] = await getFacultyTeachers(faculty.id)
+    const subjects: Subject[] = await getFacultySubjects(faculty.id)
     return <>
         <div className="bg-white rounded-lg shadow-sm p-4">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-                <h2 className="text-lg font-semibold">Professors List</h2>
-                <AddProfessor id={faculty.id}/>
+                <h2 className="text-lg font-semibold">Rooms List</h2>
+                <AddSubject id={faculty.id} />
             </div>
-
-            <DataTable columns={columns} data={teachers} searchColumn="fullName" searchPlaceholder="Search by Name or Email" />
+            <DataTable columns={columns} data={subjects} searchColumn="title" searchPlaceholder="Search by Name" />
         </div>
     </>
 }

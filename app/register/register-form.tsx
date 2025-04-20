@@ -1,24 +1,51 @@
 "use client"
 
 import { register } from "@/api/users"
-import { SubmitButton } from "@/components/submit-button"
+import { SubmitButton, SubmitButton2 } from "@/components/submit-button"
 import { Button } from "@/components/ui/button"
+import { Form } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Label } from "@radix-ui/react-label"
 import { Separator } from "@radix-ui/react-separator"
 import { Mail, Eye, EyeOff } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
+import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
+import { z } from "zod"
+
+const FormSchema = z.object({
+  email: z.string().email("please enter a valid email address"),
+  firstName: z.string().min(1, "please fill in the first name"),
+  lastName: z.string().min(1, "please fill in the last name"),
+  password: z.string().min(6, "password needs to be at least 6 characters")
+})
+
+type FormValues = z.infer<typeof FormSchema>
 
 export default function RegisterForm(){
   const [visible, setVisible] = useState(false)
 
-  return <form action={async (formData:FormData)=>{
-        const state = await register(formData)
-        if(state.success) toast.success("account created successfully! check your email to verify account.")
-        else toast.error("registration failed")
-      }} className="space-y-6">
+  const form = useForm<FormValues>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      email: "",
+      firstName: "",
+      lastName: "",
+      password: ""
+    },
+  })
+
+  // Form submission handler
+  const onSubmit = async (data: FormValues) => {
+    const state = await register(data)
+    if(state.success) toast.success("account created successfully! check your email to verify account.")
+    else toast.error("registration failed")
+  }
+
+  return <Form {...form}>
+  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
     <div className="grid md:grid-cols-2 gap-4">
       <div className="space-y-2">
         <Label htmlFor="first-name">First Name</Label>
@@ -68,9 +95,9 @@ export default function RegisterForm(){
       </div>
     </div>
 
-    <SubmitButton className="w-full bg-[#5c2f32] hover:bg-[#5c2f32]/90 text-white mt-4">
+    <SubmitButton2 form={form} className="w-full bg-[#5c2f32] hover:bg-[#5c2f32]/90 text-white mt-4">
       Sign Up
-    </SubmitButton>
+    </SubmitButton2>
 
     <div className="relative">
       <Separator className="my-2" />
@@ -108,5 +135,6 @@ export default function RegisterForm(){
       </Link>
     </div>
   </form>
+  </Form>
 
 }

@@ -7,12 +7,12 @@ import * as z from "zod"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { SubmitButton2 } from "@/components/submit-button"
-import { Plus } from "lucide-react"
+import { Pencil } from "lucide-react"
 import toast from "react-hot-toast"
-import { register } from "@/api/users"
+import { updateUser } from "@/api/users"
+import { User } from "@/lib/types"
 
 // Form validation schema
 const FormSchema = z.object({
@@ -20,47 +20,44 @@ const FormSchema = z.object({
   phone: z.string(),
   firstName: z.string().min(1, "please fill in the first name"),
   lastName: z.string().min(1, "please fill in the last name"),
-  password: z.string().min(6, "password needs to be at least 6 characters")
 })
 
 type FormValues = z.infer<typeof FormSchema>
 
-export default function AddProfessor({ id }: { id: number }) {
+export default function EditProfessor({ teacher }: { teacher: User }) {
   const [open, setOpen] = useState(false)
 
   // Initialize react-hook-form
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      email: "",
-      phone: "",
-      firstName: "",
-      lastName: "",
-      password: ""
+      email: teacher.email,
+      phone: teacher.phone,
+      firstName: teacher.firstName,
+      lastName: teacher.lastName,
     },
   })
 
   // Form submission handler
   const onSubmit = async (data: FormValues) => {
-    const state = await register({...data, faculty: { id }, role: "TEACHER"})
+    const state = await updateUser({...data, id: teacher.id})
     if(state.success){
-      toast.success("teacher added successfully")
+      toast.success("teacher information updated successfully")
       setOpen(false)
     }
-    else toast.error("failed to add teacher")
+    else toast.error("failed to update teacher information")
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-      <Button className="text-white flex items-center gap-1 w-full sm:w-auto">
-        <Plus size={16} />
-        Add Professor
-      </Button>
+        <Button variant="ghost" size="icon" className="h-8 w-8">
+          <Pencil size={16} className="text-gray-500" />
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[80%]">
         <DialogHeader>
-          <DialogTitle className="text-xl">Add Professor</DialogTitle>
+          <DialogTitle className="text-xl">Edit Professor Information</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
@@ -96,23 +93,10 @@ export default function AddProfessor({ id }: { id: number }) {
                   control={form.control}
                   name="phone"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="col-span-2">
                       <FormLabel>Phone Number</FormLabel>
                       <FormControl>
                         <Input className="bg-white w-full" placeholder="+213xxxxxxxxxx" {...field} />
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <Input className="bg-white w-full" placeholder="minimum: 6 characters" {...field} />
                       </FormControl>
                       <FormMessage className="text-xs" />
                     </FormItem>
@@ -135,7 +119,7 @@ export default function AddProfessor({ id }: { id: number }) {
 
             <DialogFooter className="sm:justify-end mx-4">
               <SubmitButton2 className="w-full" form={form}>
-                Submit
+                Update
               </SubmitButton2>
             </DialogFooter>
           </form>
