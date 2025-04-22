@@ -2,52 +2,59 @@
 import { Pencil, Trash2, ArrowUpDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { ColumnDef } from "@tanstack/react-table"
-import { Room } from "@/lib/types"
-import EditRoom from "./editRoom"
-import { DeleteRoom } from "./deleteRoom"
+import { Department, Section } from "@/lib/types"
+import { DeleteSection } from "./deleteSection"
+import EditSection from "./editSection"
 
-export const columns: ColumnDef<Room>[] = [
+export const columns: ColumnDef<Section>[] = [
     {
-        accessorKey: "code",
+        accessorKey: "name",
         header: ({ column }) => (
             <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             className="font-medium"
             >
-            Room
+            Section Name
             <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         )
     },
     {
-        accessorKey: "type",
+        accessorKey: "level",
         header: ({ column }) => (
             <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             className="font-medium"
             >
-            Type
+            Level
             <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
-        ),
-        cell: ({ row }) => {
-            const type = row.original.type
-            return  <div className="flex">
-                <div className={`${type==="STANDARD"? "bg-orange-400" : type==="LAB"? "bg-green-500" : "bg-primary" } text-white text-center px-3 rounded-lg normal-case`}>{type}</div>
-            </div>
-        }
+        )
+    },
+    {
+        accessorKey: "department.name",
+        header: ({ column }) => (
+            <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            className="font-medium"
+            >
+            Department
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        )
     },
     {
         id: "actions",
         header: "Actions",
         cell: ({ row }) => {
-            const room = row.original
+            const section = row.original
             return (
             <div className="flex items-center space-x-2">
-                <EditRoom room={room}/>
-                <DeleteRoom id={room.id}/>
+                <EditSection section={section} />
+                <DeleteSection id={section.id} />
             </div>
             )
         },

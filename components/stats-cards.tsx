@@ -1,45 +1,49 @@
 import type React from "react"
-import { Building2, BookOpen, School, Users } from "lucide-react"
-import { countActiveFacultyCourses, countFacultyDepartments, countFacultyRooms, countFacultyTeachers } from "@/api/faculty"
+import { Building2, BookOpen, School, Users, BookOpenText } from "lucide-react"
+import { countActiveFacultyCourses, countFacultyDepartments, countFacultyGroups, countFacultyRooms, countFacultySections, countFacultySubjects, countFacultyTeachers } from "@/api/faculty"
 
 export async function StatsCards({facultyId}: {facultyId: number}) {
   const [
     countRooms,
     countTeachers,
     countDepartments,
-    countActiveCourses
+    countActiveCourses,
+    countSubjects,
+    countSections,
+    countGroups
   ] = await Promise.all([
     countFacultyRooms(facultyId),
     countFacultyTeachers(facultyId),
     countFacultyDepartments(facultyId),
-    countActiveFacultyCourses(facultyId)
+    countActiveFacultyCourses(facultyId),
+    countFacultySubjects(facultyId),
+    countFacultySections(facultyId),
+    countFacultyGroups(facultyId)
+    
   ])
+  const stats = [
+    { title: "Total Professors", value: countTeachers, icon: <Users color="#4480fc" size={24} />, bgColor: "#eff6ff"},
+    { title: "Classrooms", value: countRooms, icon: <School color="#16b682" size={24} />, bgColor: "#ecfdf5"},
+    { title: "Departments", value: countDepartments, icon: <Building2 color="#8b5df4" size={24} />, bgColor: "#f5f3ff"},
+    { title: "Active Courses", value: countActiveCourses, icon: <BookOpen color="#f2731b" size={24}/>, bgColor: "#fff5e9"},
+    { title: "Subjects", value: countSubjects, icon: <BookOpenText color="#f2731b" size={24} />, bgColor: "#fff5e9"},
+    { title: "Sections", value: countSections, icon: <Building2 color="#8b5df4" size={24} />, bgColor: "#f5f3ff"},
+    { title: "Student Groups", value: countGroups, icon: <Users color="#4480fc" size={24} />, bgColor: "#eff6ff"},
+  ]
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <StatCard
-        title="Total Professors"
-        value={countTeachers}
-        icon={<Users color="#4480fc" size={24} />}
-        bgColor="bg-[#eff6ff]"
-      />
-      <StatCard
-        title="Classrooms"
-        value={countRooms}
-        icon={<School color="#16b682" size={24} />}
-        bgColor="bg-[#ecfdf5]"
-      />
-      <StatCard
-        title="Departments"
-        value={countDepartments}
-        icon={<Building2 color="#8b5df4" size={24} />}
-        bgColor="bg-[#f5f3ff]"
-      />
-      <StatCard
-        title="Active Courses"
-        value={countActiveCourses}
-        icon={<BookOpen color="#f2731b" size={24}/>}
-        bgColor="bg-[#fff5e9]"
-      />
+      {
+        stats.map(s=>(
+          <StatCard
+            key={s.title}
+            title={s.title}
+            value={s.value.toString()}
+            icon={s.icon}
+            bgColor={`bg-[${s.bgColor}]`}
+          />
+        ))
+      }
+      
     </div>
   )
 }

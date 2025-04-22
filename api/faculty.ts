@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import { axiosInstance } from "./axios"
+import { refreshToken } from "./auth"
 
 export async function getUserFaculty(userId: number) {
     try {
@@ -18,6 +19,7 @@ export async function countFacultyTeachers(facultyId: number) {
         return res.data
     } catch (error) {
         console.log(error)
+        return 0
     }
 }
 
@@ -27,6 +29,7 @@ export async function countFacultyRooms(facultyId: number) {
         return res.data
     } catch (error) {
         console.log(error)
+        return 0
     }
 }
 
@@ -36,6 +39,37 @@ export async function countFacultyDepartments(facultyId: number) {
         return res.data
     } catch (error) {
         console.log(error)
+        return 0
+    }
+}
+
+export async function countFacultySubjects(facultyId: number) {
+    try {
+        const res = await axiosInstance.get(`/faculties/${facultyId}/subjects/count`)
+        return res.data
+    } catch (error) {
+        console.log(error)
+        return 0
+    }
+}
+
+export async function countFacultySections(facultyId: number) {
+    try {
+        const res = await axiosInstance.get(`/faculties/${facultyId}/sections/count`)
+        return res.data
+    } catch (error) {
+        console.log(error)
+        return 0
+    }
+}
+
+export async function countFacultyGroups(facultyId: number) {
+    try {
+        const res = await axiosInstance.get(`/faculties/${facultyId}/groups/count`)
+        return res.data
+    } catch (error) {
+        console.log(error)
+        return 0
     }
 }
 
@@ -45,6 +79,7 @@ export async function countActiveFacultyCourses(facultyId: number) {
         return res.data
     } catch (error) {
         console.log(error)
+        return 0
     }
 }
 
@@ -58,9 +93,24 @@ export async function createFaculty(formData:FormData) {
     try {
         const res = await axiosInstance.post(`/faculties`, faculty)
         if(res.status===200){
+            await refreshToken()
             revalidatePath("/")
         }
     } catch (error) {
         console.log(error)
+    }
+}
+
+export async function updateFaculty(data:any) {
+    try {
+        const res = await axiosInstance.patch(`/faculties`, data)
+        if(res.status===200){
+            revalidatePath("/")
+            return { success: true }
+        }
+        return { success: false }
+    } catch (error) {
+        console.log(error)
+        return { success: false }
     }
 }

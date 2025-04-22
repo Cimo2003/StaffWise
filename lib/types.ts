@@ -1,6 +1,7 @@
 export interface MyUser {
     user_id: number,
     full_name: string,
+    faculty_id?: number,
     sub: string,
     role: [{  authority: string  }],
     iss: string,
@@ -40,4 +41,17 @@ export interface Subject {
     id: number,
     code: string,
     title: string
+}
+
+export interface Section {
+    id: number,
+    name: string,
+    level: string,
+    department: Department
+}
+
+export interface Group {
+    id: number,
+    code: string,
+    section: Section
 }

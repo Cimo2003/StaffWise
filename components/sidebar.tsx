@@ -32,7 +32,7 @@ export async function AppSidebar() {
                   height={32}
                   className="text-primary"
                 />
-                <span className="ml-2 font-semibold text-[#5b5857]">UniAdmin</span>
+                <span className="ml-2 font-semibold text-[#5b5857]">StaffWise</span>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>

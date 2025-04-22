@@ -10,8 +10,11 @@ const items = [
     { label: "Professors", href: "/dashboard/professors", icon: <Users /> },
     { label: "Classrooms", href: "/dashboard/classrooms", icon: <School /> },
     { label: "Departments", href: "/dashboard/departments", icon: <Building2 /> },
+    { label: "Sections", href: "/dashboard/sections", icon: <Building2 /> },
     { label: "Courses", href: "/dashboard/courses", icon: <BookOpen /> },
     { label: "Subjects", href: "/dashboard/subjects", icon: <BookOpenText /> },
+    { label: "Groups", href: "/dashboard/groups", icon: <Users /> },
+
 ]
 
 export function NavLinks(){

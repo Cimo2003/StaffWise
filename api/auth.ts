@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache"
 import { cookies } from "next/headers"
 import { axiosInstance } from "./axios"
 import axios from "axios"
+import { redirect } from "next/navigation"
 
 
 export async function decrypt(input: string): Promise<any> {
@@ -86,5 +87,19 @@ export async function resetPassword(formData:FormData) {
   const res = await axiosInstance.post(`/password/reset-password?email=${email}&code=${code}&newPassword=${newPassword}`)
   if(res.status===200){
     return {success: true}
+  }
+}
+
+export async function refreshToken() {
+  const refreshToken = (await cookies()).get('refresh-token')?.value
+  try {
+    const res = await axios.post("http://localhost:8085/auth/refresh-token", { refreshToken: refreshToken });
+    if(res.status===200){
+      const accessToken = res.data['access-token'];
+      (await cookies()).set("access-token", accessToken, { httpOnly: true });
+    }
+  } catch {
+      await logout()
+      redirect("login")
   }
 }

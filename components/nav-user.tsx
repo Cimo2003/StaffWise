@@ -52,7 +52,7 @@ export function NavUser({
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <div className="flex space-x-4 py-1">
                   <span className="truncate font-semibold">{user.full_name}</span>
-                  <span className="font-medium text-xs bg-orange-500 text-white rounded-lg px-1">{user.role[0].authority==="ADMIN"? "Administrator" : "Professor"}</span>
+                  <span className="font-medium text-xs bg-orange-500 text-white rounded-lg px-2">{user.role[0].authority==="ADMIN"? "Administrator" : "Professor"}</span>
                 </div>
                 <span className="truncate text-2xs">{user.sub}</span>
               </div>
@@ -73,7 +73,7 @@ export function NavUser({
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <div className="flex space-x-4 py-1">
                     <span className="truncate font-semibold">{user.full_name}</span>
-                    <span className="font-medium text-xs bg-orange-500 text-white rounded-lg px-1">{user.role[0].authority==="ADMIN"? "Administrator" : "Professor"}</span>
+                    <span className="font-medium text-xs bg-orange-500 text-white rounded-lg px-2">{user.role[0].authority==="ADMIN"? "Administrator" : "Professor"}</span>
                   </div>
                   <span className="truncate text-2xs">{user.sub}</span>
                 </div>
@@ -83,7 +83,7 @@ export function NavUser({
             <DropdownMenuItem>
              <a href="/settings" className="flex items-center">
                 <Settings/>
-                <span>Settings</span>
+                <span className="px-2">Settings</span>
               </a>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
