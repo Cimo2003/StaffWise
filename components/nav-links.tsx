@@ -1,6 +1,6 @@
 "use client"
 
-import { LayoutDashboard, Users, School, Building2, BookOpen, BookOpenText } from "lucide-react"
+import { LayoutDashboard, Users, School, Building2, BookOpen, BookOpenText, Calendar, CalendarFold } from "lucide-react"
 import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "./ui/sidebar"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
@@ -14,7 +14,7 @@ const items = [
     { label: "Courses", href: "/dashboard/courses", icon: <BookOpen /> },
     { label: "Subjects", href: "/dashboard/subjects", icon: <BookOpenText /> },
     { label: "Groups", href: "/dashboard/groups", icon: <Users /> },
-
+    { label: "Semesters", href: "/dashboard/semesters", icon: <CalendarFold /> },
 ]
 
 export function NavLinks(){

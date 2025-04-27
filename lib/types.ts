@@ -55,3 +55,10 @@ export interface Group {
     code: string,
     section: Section
 }
+
+export interface Semester {
+    id: number,
+    number: number,
+    semesterStart: string,
+    semesterEnd: string
+}

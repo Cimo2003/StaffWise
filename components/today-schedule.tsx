@@ -4,7 +4,7 @@ import { Progress } from "./ui/progress"
 
 export function TodaySchedule() {
     return (
-      <div className="bg-white rounded-lg shadow-sm p-4">
+      <div className="bg-white rounded-lg shadow-sm p-4 animate-fade-left animate-once">
         <h2 className="text-lg font-semibold mb-4">Today's Schedule</h2>
         <div className="space-y-4">
           <ProgressItem label="Standard" percentage={85} />

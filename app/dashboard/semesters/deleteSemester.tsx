@@ -1,10 +1,9 @@
 "use client"
-import { deleteGroup } from "@/api/groups"
-import { deleteUser } from "@/api/users"
+import { deleteSemester } from "@/api/semesters"
+import { deleteSubject } from "@/api/subjects"
 import { SubmitButton } from "@/components/submit-button"
 import {
     AlertDialog,
-    AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
@@ -18,13 +17,13 @@ import { Trash2 } from "lucide-react"
 import { useState } from "react"
 import toast from "react-hot-toast"
   
-  export function DeleteGroup({ id }: { id: number }) {
+  export function DeleteSemester({ id }: { id: number }) {
     const [open, setOpen] = useState(false)
     const handleDelete = async()=>{
-      const state = await deleteGroup(id)
+      const state = await deleteSemester(id)
       if(state.success){
         setOpen(false)
-        toast.success("Group deleted successfully!")
+        toast.success("Semester deleted successfully!")
       }
       else toast.error("Deletion failed")
     }
@@ -32,7 +31,7 @@ import toast from "react-hot-toast"
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>
           <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500 hover:text-red-400">
-            <Trash2 size={16} className="" />
+            <Trash2 size={16}/>
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
@@ -40,7 +39,7 @@ import toast from "react-hot-toast"
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete this group and remove its data from our
+              This action cannot be undone. This will permanently delete this Semester and remove all its related data from our
               servers.
             </AlertDialogDescription>
           </AlertDialogHeader>

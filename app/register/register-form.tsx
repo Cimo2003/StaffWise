@@ -52,7 +52,7 @@ export default function RegisterForm(){
           control={form.control}
           name="firstName"
           render={({ field }) => (
-            <FormItem className="space-y-2">
+            <FormItem>
               <Label htmlFor="first-name">First Name</Label>
               <FormControl>
                 <Input
@@ -70,7 +70,7 @@ export default function RegisterForm(){
           control={form.control}
           name="lastName"
           render={({ field }) => (
-            <FormItem className="space-y-2">
+            <FormItem>
               <Label htmlFor="last-name">Last Name</Label>
               <FormControl>
                 <Input
@@ -88,7 +88,7 @@ export default function RegisterForm(){
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem className="space-y-2">
+            <FormItem>
               <Label htmlFor="email">Email Address</Label>
               <FormControl>
                 <div className="relative">
@@ -110,7 +110,7 @@ export default function RegisterForm(){
           control={form.control}
           name="password"
           render={({ field }) => (
-            <FormItem className="space-y-2">
+            <FormItem >
               <Label htmlFor="password">Password</Label>
               <FormControl>
                 <div className="relative">

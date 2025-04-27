@@ -6,6 +6,11 @@ import { Faculty, MyUser, Subject } from "@/lib/types";
 import { getFacultySubjects } from "@/api/subjects";
 import AddSubject from "./addSubject";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Subjects"
+}
 
 export default async function Page() {
     const { faculty_id }: MyUser = await getToken()

@@ -1,14 +1,17 @@
 import { DataTable } from "@/components/data-table";
-import { Department, Faculty, Group, MyUser, Section } from "@/lib/types";
+import { Group, MyUser, Section } from "@/lib/types";
 import { getToken } from "@/api/auth";
-import { getUserFaculty } from "@/api/faculty";
 import { getFacultySections } from "@/api/sections";
-import { getFacultyDepartments } from "@/api/departments";
 import { columns } from "./columns";
 import { getFacultyGroups } from "@/api/groups";
 import AddGroup from "./addGroup";
 import { redirect } from "next/navigation";
 import { DataProvider } from "./dataContext";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Groups"
+}
 
 export default async function Page() {
     const { faculty_id }: MyUser = await getToken()

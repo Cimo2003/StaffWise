@@ -6,37 +6,27 @@ import { TodaySchedule } from "@/components/today-schedule";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { WeeklySchedule } from "@/components/weekly-schedule";
-import { Faculty } from "@/lib/types";
-import EditFaculty from "./editFaculty";
+import { Faculty, Semester } from "@/lib/types";
+import { FacultyInfo } from "./(faculty)/faculty-info";
+import { getCurrentSemester } from "@/api/semesters";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Dashboard"
+  }
 
 export default async function Page() {
     const { user_id } = await getToken()
     const faculty: Faculty = await getUserFaculty(user_id)
+    const currentSemester: Semester = await getCurrentSemester(faculty.id)
     return <>
         {
             faculty?
             <>
             <StatsCards facultyId={faculty.id} />
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 my-4 ">
-                <div className="bg-white rounded-lg shadow-sm p-4 lg:col-span-2">
-                    <div className="flex ">
-                        <h2 className="text-lg font-semibold mb-4 mr-2 animate-fade-left animate-once bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent">Faculty Information</h2>
-                        <EditFaculty faculty={faculty} />
-                    </div>
-                    <div className="flex p-2 animate-fade-left animate-once">
-                        <span className="font-semibold mr-2">Faculty Name:</span>
-                        <span className="text-gray-700">{faculty.name}</span>
-                    </div>
-                    <div className="flex p-2 animate-fade-left animate-once">
-                        <span className="font-semibold mr-2">Opening Time: </span>
-                        <span className="text-gray-700">{faculty.openingTime}</span>
-                    </div>
-                    <div className="flex p-2 animate-fade-left animate-once">
-                        <span className="font-semibold mr-2">Closing Time: </span>
-                        <span className="text-gray-700">{faculty.closingTime}</span>
-                    </div>
-                </div>
-                <div className="lg:col-span-1">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 my-4 ">
+                <FacultyInfo faculty={faculty} semester={currentSemester} />
+                <div className="lg:col-span-5">
                     <TodaySchedule />
                 </div>
             </div>

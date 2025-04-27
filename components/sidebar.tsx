@@ -8,13 +8,12 @@ import {
   SidebarRail,
   SidebarFooter,
 } from "@/components/ui/sidebar"
-import { LogOut } from "lucide-react"
 import Image from "next/image"
 import { NavLinks } from "./nav-links"
-import { getToken, logout } from "@/api/auth"
-import { redirect } from "next/navigation"
+import { getToken } from "@/api/auth"
 import { NavUser } from "./nav-user"
 import { MyUser } from "@/lib/types"
+import Link from "next/link"
 
 export async function AppSidebar() {
   const user: MyUser = await getToken()
@@ -24,7 +23,7 @@ export async function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg">
-              <div className="flex items-center">
+              <Link href={"/dashboard"} className="flex items-center">
                 <Image
                   src="/mainLogo.png"
                   alt="Staff Wise Logo"
@@ -33,7 +32,7 @@ export async function AppSidebar() {
                   className="text-primary"
                 />
                 <span className="ml-2 font-semibold text-[#5b5857]">StaffWise</span>
-              </div>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

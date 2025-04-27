@@ -6,6 +6,11 @@ import { Faculty, MyUser, Room } from "@/lib/types";
 import { getFacultyRooms } from "@/api/classrooms";
 import AddRoom from "./addRoom";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Rooms"
+  }
 
 export default async function Page() {
     const { faculty_id }: MyUser = await getToken()

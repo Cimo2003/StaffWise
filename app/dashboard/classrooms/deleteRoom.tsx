@@ -29,9 +29,9 @@ import toast from "react-hot-toast"
     return (
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>
-            <Button variant="ghost" size="icon" className="h-8 w-8 ">
-            <Trash2 size={16} className="text-gray-500 hover:text-red-400" />
-            </Button>
+          <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500 hover:text-red-400">
+            <Trash2 size={16} className="" />
+          </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <form action={handleDelete}>

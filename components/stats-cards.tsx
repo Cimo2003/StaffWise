@@ -57,7 +57,7 @@ interface StatCardProps {
 
 function StatCard({ title, value, icon, bgColor }: StatCardProps) {
   return (
-    <div className="bg-white rounded-lg shadow-sm p-4 flex justify-between items-center">
+    <div className="bg-white rounded-lg shadow-sm p-4 flex justify-between items-center animate-fade-left animate-once">
       <div>
         <p className="text-[#6b7280] text-sm">{title}</p>
         <h3 className="text-2xl font-bold mt-1">{value}</h3>

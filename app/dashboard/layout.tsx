@@ -4,12 +4,23 @@ import { AppSidebar } from "@/components/sidebar";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { UserProvider } from "@/hooks/userContext";
 import { MyUser } from "@/lib/types";
-import { Shantell_Sans } from "next/font/google";
+import localFont from "next/font/local";
 
-const shantell_Sans = Shantell_Sans({
-  subsets: ["latin"],
-  weight: ["300", "400", "700"]
+// Define the local font with both regular and italic variants
+const shantellSans = localFont({
+  src: [
+    {
+      path: '../../public/fonts/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/ShantellSans-Italic-VariableFont_BNCE,INFM,SPAC,wght.ttf',
+      style: 'italic',
+    },
+  ],
+  variable: '--font-shantell-sans', // For CSS variable usage
 })
+
 
 export default async function RootLayout({
   children,
@@ -18,9 +29,9 @@ export default async function RootLayout({
 }>) {
   const user: MyUser = await getToken()
   return (
-    <SidebarProvider>
+    <SidebarProvider className={`${shantellSans.className} antialiased`}>
       <UserProvider user={user}>
-      <div className={`${shantell_Sans.className} antialiased flex h-screen w-full overflow-hidden`}>
+      <div className={`flex h-screen w-full overflow-hidden`}>
         <AppSidebar />
         <SidebarInset className="flex-1 bg-[#f9fafb] content-transition">
           <Header />

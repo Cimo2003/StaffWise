@@ -49,10 +49,10 @@ export function NavUser({
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarFallback className="rounded-lg">U</AvatarFallback>
               </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
+              <div className="grid flex-1 text-left text-xs leading-tight">
                 <div className="flex space-x-4 py-1">
                   <span className="truncate font-semibold">{user.full_name}</span>
-                  <span className="font-medium text-xs bg-orange-500 text-white rounded-lg px-2">{user.role[0].authority==="ADMIN"? "Administrator" : "Professor"}</span>
+                  <span className="font-medium bg-orange-500 text-white rounded-lg px-2">{user.role[0].authority==="ADMIN"? "Administrator" : "Professor"}</span>
                 </div>
                 <span className="truncate text-2xs">{user.sub}</span>
               </div>
@@ -61,7 +61,7 @@ export function NavUser({
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
+            side="bottom"
             align="end"
             sideOffset={4}
           >

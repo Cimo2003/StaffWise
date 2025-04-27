@@ -1,11 +1,15 @@
 import { DataTable } from "@/components/data-table";
 import { columns } from "./columns";
 import { getFacultyDepartments } from "@/api/departments";
-import { Faculty, MyUser } from "@/lib/types";
+import { MyUser } from "@/lib/types";
 import { getToken } from "@/api/auth";
-import { getUserFaculty } from "@/api/faculty";
 import AddDepartment from "./addDepartment";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Departments"
+  }
 
 export default async function Page() {
     const { faculty_id }: MyUser = await getToken()
