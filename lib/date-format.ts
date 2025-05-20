@@ -6,7 +6,6 @@ import { Semester } from './types';
 export function formatDateWithOrdinal(dateString: string) {
   // Parse the input date string
   const parsedDate = parse(dateString, 'yyyy-MM-dd', new Date());
-  console.log(parsedDate)
   
   // Format the date with day, full month name and year
   let formattedDate = format(parsedDate, 'd MMMM yyyy');

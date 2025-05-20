@@ -6,8 +6,35 @@ import type { ColumnDef } from "@tanstack/react-table"
 import { User } from "@/lib/types"
 import EditProfessor from "./editProfessor"
 import { DeleteProfessor } from "./deleteProfessor"
+import { Checkbox } from "@/components/ui/checkbox"
 
 export const columns: ColumnDef<User>[] = [
+    {
+        id: "select",
+        header: ({ table }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected()
+                    ? true
+                    : table.getIsSomePageRowsSelected()
+                    ? "indeterminate"
+                    : false
+                }
+                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                aria-label="Select all"
+                className="mx-4"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
     {
     accessorKey: "fullName",
     header: ({ column }) => (

@@ -57,3 +57,32 @@ export async function deleteGroup(id:number) {
     }
     else return { success: false }
 }
+
+export async function deleteSelectedGroups(ids:number[]) {
+    const res = await axiosInstance.delete(`/groups/delete/batch`, {
+        data: { ids: ids }
+    })
+    if(res.status===200){
+        revalidatePath("/")
+        return { success: true }
+    }
+    else return { success: false }
+}
+
+export async function importGroups(data:any) {
+    const formData = new FormData()
+    formData.append("file", data.file[0])
+    formData.append("facultyId", data.id)
+    try{
+        const res = await axiosInstance.post(`/groups/import`, formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })
+        if(res.status===200){
+            revalidatePath("/")
+            return { success: true }
+        }
+        return { success: false , error: res.data.error}
+    }catch(e){
+        return { success: false , error: e}
+    }
+}

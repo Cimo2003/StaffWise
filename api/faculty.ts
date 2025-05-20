@@ -4,7 +4,16 @@ import { revalidatePath } from "next/cache"
 import { axiosInstance } from "./axios"
 import { refreshToken } from "./auth"
 
-export async function getUserFaculty(userId: number) {
+export async function getFaculty(facultyId: number) {
+    try {
+        const res = await axiosInstance.get(`/faculties/${facultyId}`)
+        return res.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export async function getAdminFaculty(userId: number) {
     try {
         const res = await axiosInstance.get(`/faculties/users/${userId}`)
         return res.data

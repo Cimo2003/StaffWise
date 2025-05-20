@@ -11,8 +11,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { SubmitButton2 } from "@/components/submit-button"
 import { Plus } from "lucide-react"
 import toast from "react-hot-toast"
-import { register } from "@/api/users"
-import { createDepartment } from "@/api/departments"
 import { createRoom } from "@/api/classrooms"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 

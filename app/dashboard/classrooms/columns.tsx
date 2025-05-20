@@ -5,8 +5,35 @@ import type { ColumnDef } from "@tanstack/react-table"
 import { Room } from "@/lib/types"
 import EditRoom from "./editRoom"
 import { DeleteRoom } from "./deleteRoom"
+import { Checkbox } from "@/components/ui/checkbox"
 
 export const columns: ColumnDef<Room>[] = [
+    {
+        id: "select",
+        header: ({ table }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected()
+                    ? true
+                    : table.getIsSomePageRowsSelected()
+                    ? "indeterminate"
+                    : false
+                }
+                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                aria-label="Select all"
+                className="mx-4"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
     {
         accessorKey: "code",
         header: ({ column }) => (

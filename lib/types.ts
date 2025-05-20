@@ -47,7 +47,7 @@ export interface Section {
     id: number,
     name: string,
     level: string,
-    department: Department
+    department?: Department
 }
 
 export interface Group {
@@ -62,3 +62,24 @@ export interface Semester {
     semesterStart: string,
     semesterEnd: string
 }
+
+export interface Course {
+    id: number,
+    subject: Subject,
+    teacher: User,
+    semester: Semester,
+    groups: Group[],
+    type: string,
+    color?: string,
+    timeslot: Timeslot | null,
+    room: Room | null
+}
+
+export interface Timeslot {
+    id: number
+    day: string
+    fromTime: string
+    toTime: string
+}
+
+export type ViewType = "room" | "teacher" | "group"

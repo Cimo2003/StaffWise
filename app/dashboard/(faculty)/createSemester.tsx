@@ -18,7 +18,7 @@ import { createSemester } from "@/api/semesters"
 
 // Form validation schema
 const FormSchema = z.object({
-  number: z.number(),
+  number: z.any(),
   semesterStart: z.string(),
   semesterEnd: z.string(),
   faculty: z.object({ id: z.number() })
@@ -73,7 +73,7 @@ export default function CreateSemester() {
                 <FormItem>
                     <FormLabel>Semester Number</FormLabel>
                     <FormControl>
-                    <Input className="bg-white w-full" placeholder="Enter Semester Number" {...field} />
+                    <Input type="number" min={1} max={2} className="bg-white w-full" placeholder="Enter Semester Number" {...field} />
                     </FormControl>
                     <FormMessage className="text-xs" />
                 </FormItem>

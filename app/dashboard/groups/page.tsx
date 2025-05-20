@@ -1,13 +1,11 @@
-import { DataTable } from "@/components/data-table";
 import { Group, MyUser, Section } from "@/lib/types";
 import { getToken } from "@/api/auth";
 import { getFacultySections } from "@/api/sections";
-import { columns } from "./columns";
 import { getFacultyGroups } from "@/api/groups";
-import AddGroup from "./addGroup";
 import { redirect } from "next/navigation";
 import { DataProvider } from "./dataContext";
 import { Metadata } from "next";
+import { TableWrapper } from "./table-wrapper";
 
 export const metadata: Metadata = {
     title: "Groups"
@@ -20,13 +18,7 @@ export default async function Page() {
         const groups: Group[] = await getFacultyGroups(faculty_id)
         return (
             <DataProvider sections={sections}>
-            <div className="bg-white rounded-lg shadow-sm p-4">
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-                    <h2 className="text-lg font-semibold">Groups List</h2>
-                    <AddGroup/>
-                </div>
-                <DataTable columns={columns} data={groups} searchColumn="code" searchPlaceholder="Search by Name" />
-            </div>
+                <TableWrapper data={groups} facultyId={faculty_id} />
             </DataProvider>
         )
     }

@@ -16,7 +16,7 @@ import { User } from "@/lib/types"
 
 // Form validation schema
 const FormSchema = z.object({
-  email: z.string().email("please enter a valid email address"),
+  id: z.number(),
   phone: z.string(),
   firstName: z.string().min(1, "please fill in the first name"),
   lastName: z.string().min(1, "please fill in the last name"),
@@ -31,7 +31,7 @@ export default function EditProfessor({ teacher }: { teacher: User }) {
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      email: teacher.email,
+      id: teacher.id,
       phone: teacher.phone,
       firstName: teacher.firstName,
       lastName: teacher.lastName,
@@ -40,7 +40,7 @@ export default function EditProfessor({ teacher }: { teacher: User }) {
 
   // Form submission handler
   const onSubmit = async (data: FormValues) => {
-    const state = await updateUser({...data, id: teacher.id})
+    const state = await updateUser(data)
     if(state.success){
       toast.success("teacher information updated successfully")
       setOpen(false)
@@ -97,19 +97,6 @@ export default function EditProfessor({ teacher }: { teacher: User }) {
                       <FormLabel>Phone Number</FormLabel>
                       <FormControl>
                         <Input className="bg-white w-full" placeholder="+213xxxxxxxxxx" {...field} />
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem className="col-span-2">
-                      <FormLabel>Email Address</FormLabel>
-                      <FormControl>
-                        <Input className="bg-white w-full" placeholder="example@email.com" {...field} />
                       </FormControl>
                       <FormMessage className="text-xs" />
                     </FormItem>

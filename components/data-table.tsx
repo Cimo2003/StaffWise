@@ -11,12 +11,13 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Search } from "lucide-react"
+import { DeleteSelectedButton } from "./delete-selected-rows"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -24,6 +25,7 @@ interface DataTableProps<TData, TValue> {
   searchColumn?: string
   searchPlaceholder?: string
   showSearch?: boolean
+  onDeleteSelected?: (selectedRowIds: number[]) => Promise<{ success: boolean }>
 }
 
 export function DataTable<TData, TValue>({
@@ -32,9 +34,11 @@ export function DataTable<TData, TValue>({
   searchColumn,
   searchPlaceholder = "Search...",
   showSearch = true,
+  onDeleteSelected,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [rowSelection, setRowSelection] = useState({})
 
   const table = useReactTable({
     data,
@@ -45,9 +49,11 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onRowSelectionChange: setRowSelection,
     state: {
       sorting,
       columnFilters,
+      rowSelection
     },
     initialState: {
       pagination: {
@@ -55,20 +61,29 @@ export function DataTable<TData, TValue>({
       },
     },
   })
+  const selectedRowIds = useMemo(() => {
+    const selectedRows = table.getFilteredSelectedRowModel().rows
+    return selectedRows.map((row) => (row.original as any).id)
+  }, [table.getFilteredSelectedRowModel().rows])
 
   return (
     <div className="space-y-4">
-      {showSearch && searchColumn && (
-        <div className="relative w-full sm:w-auto max-w-sm">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-          <Input
-            placeholder={searchPlaceholder}
-            value={(table.getColumn(searchColumn)?.getFilterValue() as string) ?? ""}
-            onChange={(event) => table.getColumn(searchColumn)?.setFilterValue(event.target.value)}
-            className="pl-10"
-          />
-        </div>
-      )}
+      <div className="flex justify-between">
+        {showSearch && searchColumn && (
+          <div className="relative w-full sm:w-auto max-w-sm">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+            <Input
+              placeholder={searchPlaceholder}
+              value={(table.getColumn(searchColumn)?.getFilterValue() as string) ?? ""}
+              onChange={(event) => table.getColumn(searchColumn)?.setFilterValue(event.target.value)}
+              className="pl-10"
+            />
+          </div> 
+        )}
+        {selectedRowIds.length > 0 && (
+          <DeleteSelectedButton selectedRowIds={selectedRowIds} onDelete={onDeleteSelected} />
+        )}
+      </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
