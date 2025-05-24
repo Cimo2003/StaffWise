@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import TimetableApp from "./timetable-app"
 import type { Room, User, Group, Subject, Timeslot, Course } from "@/lib/types"
 import { assign } from "@/api/courses"
@@ -23,7 +23,6 @@ export default function TimetableAppWrapper({
   initialTimeSlots,
   initialCourses,
 }: TimetableAppWrapperProps) {
-  // Store the data in state so it can be updated by client components
   const [rooms] = useState<Room[]>(initialRooms)
   const [teachers] = useState<User[]>(initialTeachers)
   const [groups] = useState<Group[]>(initialGroups)
@@ -88,21 +87,6 @@ export default function TimetableAppWrapper({
     }
   }
 
-  const handleDeleteCourse = async (courseId: number) => {
-    // setIsLoading(true)
-    // try {
-    //   const success = await deleteCourse(courseId)
-    //   if (success) {
-    //     setCourses((prevCourses) => prevCourses.filter((course) => course.id !== courseId))
-    //   }
-    // } catch (error) {
-    //   console.error("Failed to delete course:", error)
-    //   // Handle error
-    // } finally {
-    //   setIsLoading(false)
-    // }
-  }
-
   return (
     <TimetableApp
       rooms={rooms}
@@ -113,7 +97,6 @@ export default function TimetableAppWrapper({
       courses={courses}
       setCourses={setCourses}
       onUpdateCourse={handleUpdateCourse}
-      onDeleteCourse={handleDeleteCourse}
       isLoading={isLoading}
     />
   )

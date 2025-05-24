@@ -15,7 +15,6 @@ import { updateRoom } from "@/api/classrooms"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Room } from "@/lib/types"
 
-// Form validation schema
 const FormSchema = z.object({
   id: z.number(),
   code: z.string(),
@@ -27,7 +26,6 @@ type FormValues = z.infer<typeof FormSchema>
 export default function EditRoom({ room }: { room: Room }) {
   const [open, setOpen] = useState(false)
 
-  // Initialize react-hook-form
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -37,7 +35,6 @@ export default function EditRoom({ room }: { room: Room }) {
     },
   })
 
-  // Form submission handler
   const onSubmit = async (data: FormValues) => {
     const state = await updateRoom(data)
     if(state.success){

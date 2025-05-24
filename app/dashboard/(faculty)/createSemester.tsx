@@ -9,14 +9,12 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { SubmitButton2 } from "@/components/submit-button"
-import { Pencil, Sparkles } from "lucide-react"
+import { Sparkles } from "lucide-react"
 import toast from "react-hot-toast"
-import { Faculty, MyUser } from "@/lib/types"
-import { updateFaculty } from "@/api/faculty"
+import { MyUser } from "@/lib/types"
 import { useUser } from "@/hooks/userContext"
 import { createSemester } from "@/api/semesters"
 
-// Form validation schema
 const FormSchema = z.object({
   number: z.any(),
   semesterStart: z.string(),
@@ -29,7 +27,6 @@ type FormValues = z.infer<typeof FormSchema>
 export default function CreateSemester() {
   const [open, setOpen] = useState(false)
   const user: MyUser = useUser()
-  // Initialize react-hook-form
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -40,7 +37,6 @@ export default function CreateSemester() {
     },
   })
 
-  // Form submission handler
   const onSubmit = async (data: FormValues) => {
     const state = await createSemester(data)
     if(state.success){

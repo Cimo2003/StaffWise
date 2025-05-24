@@ -7,7 +7,7 @@ import TimetableHeader from "./timetable-header"
 import TimetableView from "./timetable-view"
 import UnassignedCourses from "./unassigned-courses"
 import type { Course, ViewType, Timeslot, Room, User, Group, Subject } from "@/lib/types"
-import toast, { Toaster } from "react-hot-toast"
+import toast from "react-hot-toast"
 import ExportButton2 from "@/components/export-button"
 
 interface TimetableAppProps {
@@ -19,7 +19,6 @@ interface TimetableAppProps {
   courses: Course[]
   setCourses: React.Dispatch<React.SetStateAction<Course[]>>
   onUpdateCourse: (course: Course) => Promise<any>
-  onDeleteCourse: (courseId: number) => Promise<void>
   isLoading: boolean
 }
 
@@ -32,7 +31,6 @@ export default function TimetableApp({
   courses,
   setCourses,
   onUpdateCourse,
-  onDeleteCourse,
   isLoading,
 }: TimetableAppProps) {
   const [viewType, setViewType] = useState<ViewType>("room")
@@ -61,7 +59,6 @@ export default function TimetableApp({
     if(!state.success) setCourses((prevCourses) => prevCourses.map((course) => (course.id === courseId ? courseToUpdate : course)))
   }
 
-  // Handle unassigning a course
   const handleUnassign = async (courseId: number) => {
     const courseToUpdate = courses.find((course) => course.id === courseId)
     if (!courseToUpdate) return
@@ -72,24 +69,19 @@ export default function TimetableApp({
       room: null
     }
 
-    // Optimistically update the UI
     setCourses((prevCourses) => prevCourses.map((course) => (course.id === courseId ? updatedCourse : course)))
 
-    // Then update on the server
     await onUpdateCourse(updatedCourse)
   }
 
-  // Handle drag start
   const handleDragStart = (courseId: number) => {
     setDraggedCourse(courseId)
   }
 
-  // Handle drag end
   const handleDragEnd = () => {
     setDraggedCourse(null)
   }
 
-  // Handle drop on a timetable cell
   const handleDrop = (timeslot: Timeslot, rowId: number) => {
     if (draggedCourse !== null) {
       handleCourseMove(draggedCourse, timeslot, rowId)
@@ -97,7 +89,6 @@ export default function TimetableApp({
     }
   }
 
-  // Filter courses into assigned and unassigned
   const assignedCourses = courses.filter((course) => course.timeslot!==null)
   const unassignedCourses = courses.filter((course) => course.timeslot===null)
 
@@ -109,7 +100,6 @@ export default function TimetableApp({
         isLoading={isLoading}
       />
 
-      {/* Unassigned courses section */}
       <div className="mb-6">
         <h2 className="text-lg font-semibold mb-3">Unassigned Courses</h2>
         <UnassignedCourses
@@ -120,7 +110,6 @@ export default function TimetableApp({
         />
       </div>
 
-      {/* Timetable view */}
       <div className="flex justify-between w-full">
         <h2 className="text-lg font-semibold mb-3">Timetable</h2>
         <ExportButton2

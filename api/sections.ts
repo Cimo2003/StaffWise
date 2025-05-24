@@ -72,6 +72,7 @@ export async function importSections(data:any) {
     const formData = new FormData()
     formData.append("file", data.file[0])
     formData.append("facultyId", data.id)
+    console.log(formData.get("facultyId"))
     try{
         const res = await axiosInstance.post(`/sections/import`, formData, {
             headers: { 'Content-Type': 'multipart/form-data' }
@@ -81,7 +82,7 @@ export async function importSections(data:any) {
             return { success: true }
         }
         return { success: false , error: res.data.error}
-    }catch(e){
-        return { success: false , error: e}
+    }catch(e:any){
+        return { success: false , error: e.response.data}
     }
 }

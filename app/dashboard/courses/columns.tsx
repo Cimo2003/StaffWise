@@ -77,7 +77,7 @@ export const columns: ColumnDef<Course>[] = [
             const groups = row.original.groups
             return <div className="grid grid-cols-2 gap-1">
                 { groups.map(g=>(
-                    <div key={g.id} className={`bg-amber-400 text-white text-center text-xs px-2 rounded-lg normal-case`}>{g.code}-{g.section.level}</div>
+                    <div key={g.id} className={`bg-amber-400 text-white text-center text-xs px-2 rounded-lg normal-case`}>{g.code}-{g.section.name}</div>
                 )) }
             </div>
         }

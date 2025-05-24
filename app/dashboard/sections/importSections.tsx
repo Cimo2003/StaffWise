@@ -39,7 +39,7 @@ export default function ImportSections({ id }: { id: number }) {
       toast.success("sections imported successfully")
       setOpen(false)
     }
-    else toast.error(state.error)
+    else toast.error(state.error.toString())
   }
 
   return (

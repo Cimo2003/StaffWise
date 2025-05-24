@@ -1,6 +1,5 @@
 "use client"
 
-import { Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { ViewType } from "@/lib/types"
 import AddCourse from "../courses/addCourse"

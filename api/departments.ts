@@ -70,7 +70,7 @@ export async function importDepartments(data:any) {
             return { success: true }
         }
         return { success: false , error: res.data.error}
-    }catch(e){
-        return { success: false , error: e}
+    }catch(e:any){
+        return { success: false , error: e.response.data}
     }
 }

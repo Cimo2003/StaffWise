@@ -13,7 +13,6 @@ import toast from "react-hot-toast"
 import { importRooms } from "@/api/classrooms"
 import { FileInput } from "@/components/file-input"
 
-// Form validation schema
 const FormSchema = z.object({
   file: z.custom<File>()
 })
@@ -23,12 +22,10 @@ type FormValues = z.infer<typeof FormSchema>
 export default function ImportRooms({ id }: { id: number }) {
   const [open, setOpen] = useState(false)
 
-  // Initialize react-hook-form
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
   })
 
-  // Form submission handler
   const onSubmit = async (data: FormValues) => {
     const state = await importRooms({...data, id})
     if(state.success){

@@ -67,7 +67,7 @@ export function DataTable<TData, TValue>({
   }, [table.getFilteredSelectedRowModel().rows])
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 overflow-x-auto">
       <div className="flex justify-between">
         {showSearch && searchColumn && (
           <div className="relative w-full sm:w-auto max-w-sm">

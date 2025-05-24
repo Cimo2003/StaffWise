@@ -26,7 +26,6 @@ type FormValues = z.infer<typeof FormSchema>
 export default function AddRoom({ id }: { id: number }) {
   const [open, setOpen] = useState(false)
 
-  // Initialize react-hook-form
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -36,7 +35,6 @@ export default function AddRoom({ id }: { id: number }) {
     },
   })
 
-  // Form submission handler
   const onSubmit = async (data: FormValues) => {
     const state = await createRoom(data)
     if(state.success){

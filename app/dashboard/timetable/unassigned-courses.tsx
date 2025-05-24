@@ -17,7 +17,6 @@ export default function UnassignedCourses({ courses, onDragStart, onDragEnd, onU
   const [showLeftArrow, setShowLeftArrow] = useState(false)
   const [showRightArrow, setShowRightArrow] = useState(false)
 
-  // Check if scroll arrows should be shown
   useEffect(() => {
     const checkScroll = () => {
       if (!scrollContainerRef.current) return
@@ -26,16 +25,10 @@ export default function UnassignedCourses({ courses, onDragStart, onDragEnd, onU
       setShowLeftArrow(scrollLeft > 0)
       setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 5) // 5px buffer
     }
-
-    // Initial check
     checkScroll()
-
-    // Add scroll event listener
     const scrollContainer = scrollContainerRef.current
     if (scrollContainer) {
       scrollContainer.addEventListener("scroll", checkScroll)
-
-      // Also check when window resizes
       window.addEventListener("resize", checkScroll)
     }
 
@@ -47,14 +40,12 @@ export default function UnassignedCourses({ courses, onDragStart, onDragEnd, onU
     }
   }, [courses])
 
-  // Scroll left
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({ left: -300, behavior: "smooth" })
     }
   }
 
-  // Scroll right
   const scrollRight = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({ left: 300, behavior: "smooth" })
@@ -63,24 +54,18 @@ export default function UnassignedCourses({ courses, onDragStart, onDragEnd, onU
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
-    // Add visual feedback
     e.currentTarget.classList.add("bg-blue-50")
   }
 
-  // Handle drag leave
   const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault()
-    // Remove visual feedback
     e.currentTarget.classList.remove("bg-blue-50")
   }
 
-  // Handle drop
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
-    // Remove visual feedback
     e.currentTarget.classList.remove("bg-blue-50")
 
-    // Get the dragged course ID from the data transfer
     const courseId = Number.parseInt(e.dataTransfer.getData("text/plain"), 10)
     if (!isNaN(courseId) && onUnassign) {
       onUnassign(courseId)
@@ -109,7 +94,6 @@ export default function UnassignedCourses({ courses, onDragStart, onDragEnd, onU
         </div>
       ) : (
         <div className="relative">
-          {/* Left scroll button */}
           {showLeftArrow && (
             <button
               onClick={scrollLeft}
@@ -145,7 +129,6 @@ export default function UnassignedCourses({ courses, onDragStart, onDragEnd, onU
             </div>
           ))}
           </div>
-          {/* Right scroll button */}
           {showRightArrow && (
             <button
               onClick={scrollRight}

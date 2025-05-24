@@ -7,7 +7,6 @@ import { ExportButton } from "./export-button"
 
 export default async function WeeklySchedule({ user, semester }: { user: MyUser, semester: Semester }) {
 
-  //const timeslots: Timeslot[] = await getTimeSlots()
   const courses: Course[] = await getTeacherSchedule(user.user_id, semester.id)
 
   const scheduleData = {

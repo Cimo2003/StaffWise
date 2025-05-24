@@ -12,7 +12,6 @@ export async function FacultyInfo({faculty, semester}:{ faculty: Faculty, semest
     const { role }: MyUser = await getToken()
     return <>
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-6 max-w-lvw">
-            {/* Faculty Information */}
             <Card className="py-3 animate-fade-left animate-once">
               <CardContent className="p-0">
                 <div className="px-4 py-2 flex justify-between items-center animate-fade-left animate-once">
@@ -45,7 +44,6 @@ export async function FacultyInfo({faculty, semester}:{ faculty: Faculty, semest
               </CardContent>
             </Card>
 
-            {/* Current Semester */}
             <Card className="py-3 animate-fade-left animate-once">
               <CardContent className="p-0">
                 <div className="px-4 py-2 flex justify-between items-center">

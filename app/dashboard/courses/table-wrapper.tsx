@@ -13,7 +13,7 @@ export function TableWrapper({data}: { data: Course[]}){
         return state
     }
     return <>
-    <div className="bg-white rounded-lg shadow-sm p-4">
+    <div className="bg-white rounded-lg shadow-sm p-4 overflow-auto">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
             <h2 className="text-lg font-semibold">Courses List</h2>
             <div className="flex gap-2">
@@ -21,7 +21,7 @@ export function TableWrapper({data}: { data: Course[]}){
                 <AddCourse/>
             </div>
         </div>
-        <DataTable 
+        <DataTable
             columns={columns}
             data={data}
             onDeleteSelected={handleDeleteSelected}

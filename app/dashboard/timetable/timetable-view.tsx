@@ -32,13 +32,11 @@ export default function TimetableView({
 }: TimetableViewProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
-  // State to track right-click dragging
   const [isRightDragging, setIsRightDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [startY, setStartY] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
   const [scrollTop, setScrollTop] = useState(0)
-  // Get rows based on view type
   const rows = useMemo(() => {
     switch (viewType) {
       case "room":
@@ -52,7 +50,6 @@ export default function TimetableView({
     }
   }, [viewType, rooms, teachers, groups])
 
-  // Group timeslots by day
   const timeSlotsByDay = useMemo(() => {
     const grouped: { [key: string]: Timeslot[] } = {}
 
@@ -66,10 +63,8 @@ export default function TimetableView({
     return grouped
   }, [timeSlots])
 
-  // Get unique days
   const days = useMemo(() => Object.keys(timeSlotsByDay), [timeSlotsByDay])
 
-  // Filter courses based on view type and row
   const getCoursesForCell = (rowId: number, timeslot: Timeslot) => {
     return courses.filter((course) => {
       if (!course.timeslot || course.timeslot.id !== timeslot.id) {
@@ -89,14 +84,11 @@ export default function TimetableView({
     })
   }
 
-  // Handle drop on a cell
   const handleDrop = (e: React.DragEvent, timeslot: Timeslot, rowId: number, cellCourses: Course[]) => {
     e.preventDefault()
-    // Remove visual feedback
     e.currentTarget.classList.remove("bg-blue-50")
 
     if(cellCourses.length<1){
-      // Get the course ID from the data transfer
       const courseId = Number.parseInt(e.dataTransfer.getData("text/plain"), 10)
       if (!isNaN(courseId)) {
         onDrop(timeslot, rowId)
@@ -106,21 +98,16 @@ export default function TimetableView({
     
   }
 
-  // Handle drag over
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
-    // Add visual feedback
     e.currentTarget.classList.add("bg-blue-50")
   }
 
-  // Handle drag leave
   const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault()
-    // Remove visual feedback
     e.currentTarget.classList.remove("bg-blue-50")
   }
 
-  // Format student groups for display
   const formatGroups = (groups: Group[]) => {
     if (!groups || groups.length === 0) return "No groups"
     if (groups.length === 1) return `${groups[0].code}-${groups[0].section.name}`
@@ -128,9 +115,8 @@ export default function TimetableView({
   }
 
   const handleMouseDown = (e: React.MouseEvent) => {
-    // Only handle right mouse button (button 2)
     if (e.button === 2 && scrollContainerRef.current) {
-      e.preventDefault() // Prevent context menu
+      e.preventDefault()
 
       setIsRightDragging(true)
       setStartX(e.pageX - scrollContainerRef.current.offsetLeft)
@@ -138,7 +124,6 @@ export default function TimetableView({
       setScrollLeft(scrollContainerRef.current.scrollLeft)
       setScrollTop(scrollContainerRef.current.scrollTop)
 
-      // Change cursor to indicate grabbing
       if (scrollContainerRef.current) {
         scrollContainerRef.current.style.cursor = "grabbing"
       }
@@ -150,15 +135,12 @@ export default function TimetableView({
 
     e.preventDefault()
 
-    // Calculate how far the mouse has moved
     const x = e.pageX - scrollContainerRef.current.offsetLeft
     const y = e.pageY - scrollContainerRef.current.offsetTop
 
-    // Calculate the scroll position
-    const walkX = (x - startX) * 1.5 // Multiply by 1.5 for faster scrolling
+    const walkX = (x - startX) * 1.5
     const walkY = (y - startY) * 1.5
 
-    // Apply the scroll
     scrollContainerRef.current.scrollLeft = scrollLeft - walkX
     scrollContainerRef.current.scrollTop = scrollTop - walkY
   }
@@ -166,23 +148,19 @@ export default function TimetableView({
   const handleMouseUp = () => {
     setIsRightDragging(false)
 
-    // Reset cursor
     if (scrollContainerRef.current) {
       scrollContainerRef.current.style.cursor = "auto"
     }
   }
 
   const handleContextMenu = (e: React.MouseEvent) => {
-    // Prevent context menu when right-clicking on the timetable
     e.preventDefault()
   }
 
-  // Add and remove event listeners
   useEffect(() => {
     const container = scrollContainerRef.current
 
     if (container) {
-      // Add mouseup listener to document to handle cases where mouse is released outside the container
       document.addEventListener("mouseup", handleMouseUp)
     }
 
@@ -202,15 +180,12 @@ export default function TimetableView({
     >      
       <table className="min-w-[600px] w-full border-collapse text-sm">        
         <thead>
-          {/* Day headers row */}
           <tr>
-            {/* Empty cell in top-left corner */}
             <th className="p-1.5 font-medium text-gray-500 border-b border-r text-left text-xs sticky top-0 left-0 z-20 bg-white"
               rowSpan={2}>
               {viewType === "room" ? "Room" : viewType === "teacher" ? "Teacher" : "Group"}
             </th>
 
-            {/* Day headers spanning their time slots */}
             {days.map((day) => {
               const dayTimeSlots = timeSlotsByDay[day]
               return (
@@ -225,9 +200,7 @@ export default function TimetableView({
             })}
           </tr>
 
-          {/* Time slot sub-headers row */}
           <tr>
-            {/* Time slot headers */}
             {days.map((day) => {
               const dayTimeSlots = timeSlotsByDay[day]
               return dayTimeSlots.map((slot) => (
@@ -240,10 +213,8 @@ export default function TimetableView({
         </thead>
 
         <tbody>
-          {/* Rows for each room/teacher/group */}
           {rows.map((row) => (
             <tr key={row.id}>
-              {/* Row label */}
               <th className="p-1.5 font-medium border-b border-r text-left text-xs sticky left-0 bg-white z-10">
                 {viewType === "teacher"
                   ? (row as User).fullName
@@ -252,7 +223,6 @@ export default function TimetableView({
                     : (row as Group).code}
               </th>
 
-              {/* Cells for each day and timeslot */}
               {days.map((day) => {
                 const dayTimeSlots = timeSlotsByDay[day]
 

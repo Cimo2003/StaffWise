@@ -16,7 +16,6 @@ import { useData } from "@/app/dashboard/timetable/dataContext"
 import { createCourse } from "@/api/courses"
 import MultipleSelector from "@/components/ui/multiple-selector"
 
-// Form validation schema
 const FormSchema = z.object({
   type: z.string(),
   semester: z.object({ id: z.number() }),
@@ -52,7 +51,6 @@ export default function AddCourse() {
     },
   })
 
-  // Form submission handler
   const onSubmit = async (data: FormValues) => {
     const state = await createCourse({...data, groups: data.groups.map(g=>{return{id: g.value}})})
     if(state.success){

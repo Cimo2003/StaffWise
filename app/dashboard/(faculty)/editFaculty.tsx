@@ -14,7 +14,6 @@ import toast from "react-hot-toast"
 import { Faculty } from "@/lib/types"
 import { updateFaculty } from "@/api/faculty"
 
-// Form validation schema
 const FormSchema = z.object({
   id: z.number(),
   name: z.string(),
@@ -27,7 +26,6 @@ type FormValues = z.infer<typeof FormSchema>
 export default function EditSubject({ faculty }: { faculty: Faculty }) {
   const [open, setOpen] = useState(false)
 
-  // Initialize react-hook-form
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -38,7 +36,6 @@ export default function EditSubject({ faculty }: { faculty: Faculty }) {
     },
   })
 
-  // Form submission handler
   const onSubmit = async (data: FormValues) => {
     const state = await updateFaculty(data)
     if(state.success){
