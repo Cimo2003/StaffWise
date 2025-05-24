@@ -19,7 +19,7 @@ export async function AppSidebar() {
   const user: MyUser = await getToken()
   return (
     <Sidebar collapsible="icon" className="sidebar-transition">
-      <SidebarHeader className="bg-gradient-to-r to-white">
+      <SidebarHeader className="bg-white">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg">
@@ -37,10 +37,10 @@ export async function AppSidebar() {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent className="bg-gradient-to-r to-white">
+      <SidebarContent className="bg-white">
         <NavLinks/>
       </SidebarContent>
-      <SidebarFooter className="border-t border-border bg-gradient-to-r to-white">
+      <SidebarFooter className="border-t border-border bg-white">
         <SidebarMenu>
           <NavUser user={user}/>
         </SidebarMenu>

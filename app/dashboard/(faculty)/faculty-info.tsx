@@ -11,7 +11,7 @@ import { getToken } from "@/api/auth";
 export async function FacultyInfo({faculty, semester}:{ faculty: Faculty, semester: Semester }){
     const { role }: MyUser = await getToken()
     return <>
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-6">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-6 max-w-lvw">
             {/* Faculty Information */}
             <Card className="py-3 animate-fade-left animate-once">
               <CardContent className="p-0">

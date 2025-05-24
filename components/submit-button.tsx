@@ -10,7 +10,7 @@ export function SubmitButton({className, children}: { className?: string , child
  
   return (
     <Button className={`${className}`} disabled={pending} type="submit">
-      { pending? <Spinner size="sm" className="border-white text-white" /> : children  }
+      { pending? <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div> : children  }
     </Button>
   )
 }
@@ -18,7 +18,7 @@ export function SubmitButton({className, children}: { className?: string , child
 export function SubmitButton2({form, children, className}: { form: any, children: ReactNode, className?: string }) {
   return(
     <Button type="submit" disabled={form.formState.isSubmitting} className={`${className}`}>
-      {form.formState.isSubmitting? <Spinner size="sm" className="border-white text-white"  /> : children}
+      {form.formState.isSubmitting? <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div> : children}
     </Button>
   )
 }

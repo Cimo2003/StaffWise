@@ -1,9 +1,6 @@
-import { DataTable } from "@/components/data-table";
-import { Department, Faculty, MyUser, Section } from "@/lib/types";
+import { Department, MyUser, Section } from "@/lib/types";
 import { getToken } from "@/api/auth";
 import { getFacultySections } from "@/api/sections";
-import { columns } from "./columns";
-import AddSection from "./addSection";
 import { getFacultyDepartments } from "@/api/departments";
 import { redirect } from "next/navigation";
 import { DataProvider } from "./dataContext";

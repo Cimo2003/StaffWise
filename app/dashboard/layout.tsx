@@ -29,11 +29,12 @@ export default async function RootLayout({
 }>) {
   const user: MyUser = await getToken()
   return (
-    <SidebarProvider className={`${shantellSans.className}`}>
+    <SidebarProvider >
       <UserProvider user={user}>
       <div className={`flex h-screen w-full overflow-hidden`}>
         <AppSidebar />
         <SidebarInset className="flex-1 bg-[#f9fafb] content-transition">
+          <Header/>
           <main className="flex-1 overflow-y-auto p-4">
             { children }
           </main>

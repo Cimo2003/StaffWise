@@ -92,7 +92,7 @@ export default function EditGroup({ group }: { group: Group }) {
                                 {
                                     sections.map(s=>(<SelectItem key={s.id} value={s.id.toString()}>
                                         <div>{s.name}</div>
-                                        <div>{s.department.name}</div>
+                                        <div>{s.department?.name}</div>
                                     </SelectItem>))
                                 }
                             </SelectContent>

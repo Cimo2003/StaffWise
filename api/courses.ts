@@ -15,6 +15,28 @@ export async function getSemesterCourses(semesterId: number) {
     }
 }
 
+export async function getTeacherSchedule(teacerId: number, semesterId: number) {
+    try {
+        const res = await axiosInstance.get(`/courses/semesters/${semesterId}/users/${teacerId}`)
+        if(res.status===200) return res.data
+        return []
+    } catch (error) {
+        console.log(error)
+        return []
+    }
+}
+
+export async function countTeacherCoursesForToday(teacerId: number) {
+    try {
+        const res = await axiosInstance.get(`/courses/users/${teacerId}/count`)
+        if(res.status===200) return res.data
+        return 0
+    } catch (error) {
+        console.log(error)
+        return 0
+    }
+}
+
 export async function getCurrentSemesterCourses(facultyId: number) {
     try {
         const res = await axiosInstance.get(`/courses/faculties/${facultyId}/semesters/current`)

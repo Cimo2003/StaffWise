@@ -37,7 +37,7 @@ export default function EditSection({ section }: { section: Section }) {
       id: section.id,
       name: section.name,
       level: section.level,
-      department: { id: section.department.id.toString() }
+      department: { id: section.department?.id.toString() }
     },
   })
 

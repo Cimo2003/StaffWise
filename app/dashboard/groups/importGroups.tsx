@@ -12,6 +12,7 @@ import { Import } from "lucide-react"
 import toast from "react-hot-toast"
 import { importRooms } from "@/api/classrooms"
 import { FileInput } from "@/components/file-input"
+import { importGroups } from "@/api/groups"
 
 // Form validation schema
 const FormSchema = z.object({
@@ -30,7 +31,7 @@ export default function ImportGroups({ id }: { id: number }) {
 
   // Form submission handler
   const onSubmit = async (data: FormValues) => {
-    const state = await importRooms({...data, id})
+    const state = await importGroups({...data, id})
     if(state.success){
       toast.success("Groups imported successfully")
       setOpen(false)

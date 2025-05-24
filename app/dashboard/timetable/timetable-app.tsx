@@ -8,6 +8,7 @@ import TimetableView from "./timetable-view"
 import UnassignedCourses from "./unassigned-courses"
 import type { Course, ViewType, Timeslot, Room, User, Group, Subject } from "@/lib/types"
 import toast, { Toaster } from "react-hot-toast"
+import ExportButton2 from "@/components/export-button"
 
 interface TimetableAppProps {
   rooms: Room[]
@@ -101,7 +102,7 @@ export default function TimetableApp({
   const unassignedCourses = courses.filter((course) => course.timeslot===null)
 
   return (
-    <div className="container mx-auto px-4 py-6 max-w-[77lvw]">
+    <div className="container mx-auto px-4 py-6 max-w-[76lvw]">
       <TimetableHeader
         viewType={viewType}
         setViewType={setViewType}
@@ -120,7 +121,17 @@ export default function TimetableApp({
       </div>
 
       {/* Timetable view */}
-      <h2 className="text-lg font-semibold mb-3">Timetable</h2>
+      <div className="flex justify-between w-full">
+        <h2 className="text-lg font-semibold mb-3">Timetable</h2>
+        <ExportButton2
+            viewType={viewType}
+            courses={courses}
+            rooms={rooms}
+            teachers={teachers}
+            groups={groups}
+            timeSlots={timeSlots}
+          />
+      </div>
       <TimetableView
         viewType={viewType}
         courses={assignedCourses}

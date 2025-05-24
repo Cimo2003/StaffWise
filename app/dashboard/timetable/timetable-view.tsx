@@ -194,7 +194,7 @@ export default function TimetableView({
   return (
     <div
       ref={scrollContainerRef}
-      className="bg-white rounded-lg shadow overflow-auto max-h-[80vh]"
+      className="bg-white rounded-lg shadow overflow-auto max-h-[80vh] max-h-[80vh]"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}

@@ -10,8 +10,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { SubmitButton2 } from "@/components/submit-button"
 import { Import } from "lucide-react"
 import toast from "react-hot-toast"
-import { importRooms } from "@/api/classrooms"
 import { FileInput } from "@/components/file-input"
+import { importDepartments } from "@/api/departments"
 
 // Form validation schema
 const FormSchema = z.object({
@@ -20,7 +20,7 @@ const FormSchema = z.object({
 
 type FormValues = z.infer<typeof FormSchema>
 
-export default function ImportRooms({ id }: { id: number }) {
+export default function ImportDepartments({ id }: { id: number }) {
   const [open, setOpen] = useState(false)
 
   // Initialize react-hook-form
@@ -30,7 +30,7 @@ export default function ImportRooms({ id }: { id: number }) {
 
   // Form submission handler
   const onSubmit = async (data: FormValues) => {
-    const state = await importRooms({...data, id})
+    const state = await importDepartments({...data, id})
     if(state.success){
       toast.success("departments imported successfully")
       setOpen(false)

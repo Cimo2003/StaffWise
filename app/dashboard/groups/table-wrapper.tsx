@@ -15,7 +15,7 @@ export function TableWrapper({facultyId, data}: { facultyId: number, data: Group
     return <>
     <div className="bg-white rounded-lg shadow-sm p-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-            <h2 className="text-lg font-semibold">Rooms List</h2>
+            <h2 className="text-lg font-semibold">Groups List</h2>
             <div className="flex gap-2">
                 <ImportGroups id={facultyId}/>
                 <AddGroup/>

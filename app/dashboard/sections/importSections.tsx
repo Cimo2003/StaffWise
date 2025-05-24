@@ -10,12 +10,16 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { SubmitButton2 } from "@/components/submit-button"
 import { Import } from "lucide-react"
 import toast from "react-hot-toast"
-import { importRooms } from "@/api/classrooms"
 import { FileInput } from "@/components/file-input"
+import { importSections } from "@/api/sections"
 
 // Form validation schema
 const FormSchema = z.object({
-  file: z.custom<File>()
+  file: z.custom<FileList>((val) => {
+    if (!val || val.length === 0) return false
+    const file = val[0]
+    return file instanceof File && file.size > 0
+  }, "Please select a valid file")
 })
 
 type FormValues = z.infer<typeof FormSchema>
@@ -30,9 +34,9 @@ export default function ImportSections({ id }: { id: number }) {
 
   // Form submission handler
   const onSubmit = async (data: FormValues) => {
-    const state = await importRooms({...data, id})
+    const state = await importSections({...data, id})
     if(state.success){
-      toast.success("Sections imported successfully")
+      toast.success("sections imported successfully")
       setOpen(false)
     }
     else toast.error(state.error)

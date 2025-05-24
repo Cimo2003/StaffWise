@@ -1,5 +1,4 @@
 "use client"
-import { deleteRoom } from "@/api/classrooms"
 import { deleteSection } from "@/api/sections"
 import { SubmitButton } from "@/components/submit-button"
 import {

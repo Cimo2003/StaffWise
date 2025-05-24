@@ -30,6 +30,7 @@ import { MyUser } from "@/lib/types"
 import { logout } from "@/api/auth"
 import { redirect } from "next/navigation"
 import { logoutAction } from "./logout-action"
+import Link from "next/link"
 
 export function NavUser({
   user
@@ -52,7 +53,7 @@ export function NavUser({
               <div className="grid flex-1 text-left text-xs leading-tight">
                 <div className="flex space-x-4 py-1">
                   <span className="truncate font-semibold">{user.full_name}</span>
-                  <span className="font-medium bg-orange-500 text-white rounded-lg px-2">{user.role[0].authority==="ADMIN"? "Administrator" : "Professor"}</span>
+                  <span className="font-medium bg-orange-500 text-white rounded-lg px-2">{user.role[0].authority==="ADMIN"? "Admin" : "Prof"}</span>
                 </div>
                 <span className="truncate text-2xs">{user.sub}</span>
               </div>
@@ -81,10 +82,10 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-             <a href="/settings" className="flex items-center">
+             <Link href="/dashboard/settings" className="flex items-center w-full">
                 <Settings/>
                 <span className="px-2">Settings</span>
-              </a>
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
                 <button 

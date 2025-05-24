@@ -60,14 +60,11 @@ export async function getToken() {
   return await decrypt(token);
 }
 
-export async function updatePassword(formData:FormData) {
-  const prevPassword = formData.get('prevPassword')
-  const newPassword = formData.get('newPassword')
-  const token = (await cookies()).get('access-token')?.value
+export async function updatePassword(data:any) {
   
-  const res = await axiosInstance.post(`/password/update-password?prevPassword=${prevPassword}&newPassword=${newPassword}`)
+  const res = await axiosInstance.post(`/password/update-password?prevPassword=${data.currentPassword}&newPassword=${data.newPassword}`)
   if(res.status===200){
-    revalidatePath('/profile')
+    revalidatePath('/')
     return {success: true}
   }
 }
