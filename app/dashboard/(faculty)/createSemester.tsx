@@ -49,10 +49,10 @@ export default function CreateSemester() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="animate-fade-left animate-once">
+        <Button className="animate-fade-left animate-once ml-5 mt-5 bg-blue-500 hover:bg-blue-600 hover:text-white">
             <Sparkles />
             Start New Semester
-        </Button>    
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[80%]">
         <DialogHeader>
