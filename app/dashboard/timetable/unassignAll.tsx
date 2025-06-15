@@ -1,9 +1,8 @@
 "use client"
-import { deleteCourse } from "@/api/courses"
+import { unassignAll } from "@/api/courses"
 import { SubmitButton } from "@/components/submit-button"
 import {
     AlertDialog,
-    AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
@@ -16,37 +15,40 @@ import {
 import { Trash2 } from "lucide-react"
 import { useState } from "react"
 import toast from "react-hot-toast"
+import { useData } from "./dataContext"
+import { Course } from "@/lib/types"
   
-  export function DeleteCourse({ id }: { id: number }) {
+  export function UnassignAll({onUnassign}: {onUnassign: (courses: Course[]) => void}) {
     const [open, setOpen] = useState(false)
-    const handleDelete = async()=>{
-      const state = await deleteCourse(id)
+    const { semesterId } = useData()
+    const handleUnassign = async()=>{
+      const state = await unassignAll(semesterId)
       if(state.success){
         setOpen(false)
-        toast.success("Course deleted successfully!")
+        onUnassign(state.data)
+        toast.success("Courses unassigned successfully!")
       }
-      else toast.error("Deletion failed")
+      else toast.error("Unassignment failed")
     }
     return (
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>
-          <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500 hover:text-red-400">
-            <Trash2 size={16} className="" />
+          <Button size="sm" className="bg-orange-500 hover:bg-orange-400">
+            Unassign All
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
-          <form action={handleDelete}>
+          <form action={handleUnassign}>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete this course and remove its data from our
-              servers.
+              This action cannot be undone. This will unassign all courses in this semester.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <SubmitButton>
-              Delete
+              Unassign
             </SubmitButton>
           </AlertDialogFooter>
           </form>

@@ -28,7 +28,6 @@ export default function TimetableView({
   onDrop,
   onDragStart,
   onDragEnd,
-  draggedCourseId,
 }: TimetableViewProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 

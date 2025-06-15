@@ -76,6 +76,20 @@ export async function updateCourse(data: any) {
     }
 }
 
+export async function unassignAll(semesterId:number) {
+    try {
+        const res = await axiosInstance.patch(`/courses/unassign?semester_id=${semesterId}`)
+        if(res.status===200) {
+            revalidatePath('/')
+            return { success: true, data: res.data }
+        }
+        return { success: false }
+    } catch (error) {
+        console.log(error)
+        return { success: false }
+    }
+}
+
 export async function assign(data: Course) {
     try {
         const res = await axiosInstance.patch(`/courses/assign`, data);
@@ -124,6 +138,19 @@ export async function importCourses(data:any) {
         if(res.status===200){
             revalidatePath("/")
             return { success: true }
+        }
+        return { success: false , error: res.data.error}
+    }catch(e){
+        return { success: false , error: e}
+    }
+}
+
+export async function generate(semesterId:number) {
+    try{
+        const res = await axiosInstance.post(`/timetable/generate?semesterId=${semesterId}`)
+        if(res.status===200){
+            revalidatePath("/")
+            return { success: true, data: res.data.courses }
         }
         return { success: false , error: res.data.error}
     }catch(e){

@@ -9,6 +9,9 @@ import UnassignedCourses from "./unassigned-courses"
 import type { Course, ViewType, Timeslot, Room, User, Group, Subject } from "@/lib/types"
 import toast from "react-hot-toast"
 import ExportButton2 from "@/components/export-button"
+import { UnassignAll } from "./unassignAll"
+import { Generate } from "./generate"
+import AddCourse from "../courses/addCourse"
 
 interface TimetableAppProps {
   rooms: Room[]
@@ -74,6 +77,10 @@ export default function TimetableApp({
     await onUpdateCourse(updatedCourse)
   }
 
+  const handleAssignAll = (courses: Course[]) => {
+    setCourses(courses)
+  }
+
   const handleDragStart = (courseId: number) => {
     setDraggedCourse(courseId)
   }
@@ -94,12 +101,8 @@ export default function TimetableApp({
 
   return (
     <div className="container mx-auto px-4 py-6 max-w-[76lvw]">
-      <TimetableHeader
-        viewType={viewType}
-        setViewType={setViewType}
-        isLoading={isLoading}
-      />
-
+      <h1 className="text-2xl font-bold mb-4">Faculty Scheduling Timetable</h1>
+      <AddCourse/>
       <div className="mb-6">
         <h2 className="text-lg font-semibold mb-3">Unassigned Courses</h2>
         <UnassignedCourses
@@ -109,18 +112,28 @@ export default function TimetableApp({
           onUnassign={handleUnassign}
         />
       </div>
-
-      <div className="flex justify-between w-full">
-        <h2 className="text-lg font-semibold mb-3">Timetable</h2>
-        <ExportButton2
+      <h2 className="text-lg font-semibold mb-3">Timetable</h2>
+      <div className="flex items-center justify-between gap-2 w-full mb-4 bg-gray-100 rounded-md">
+          <TimetableHeader
             viewType={viewType}
-            courses={courses}
-            rooms={rooms}
-            teachers={teachers}
-            groups={groups}
-            timeSlots={timeSlots}
+            setViewType={setViewType}
+            isLoading={isLoading}
           />
+          <div className="flex gap-2 px-4">
+            <Generate onGenerate={handleAssignAll}/>
+            <UnassignAll onUnassign={handleAssignAll}/>
+            <ExportButton2
+              viewType={viewType}
+              courses={courses}
+              rooms={rooms}
+              teachers={teachers}
+              groups={groups}
+              timeSlots={timeSlots}
+            />
+          </div>
+          
       </div>
+        
       <TimetableView
         viewType={viewType}
         courses={assignedCourses}

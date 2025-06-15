@@ -16,13 +16,7 @@ export default function TimetableHeader({
   isLoading = false,
 }: TimetableHeaderProps) {
   return (
-    <div className="mb-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-        <h1 className="text-2xl font-bold">Faculty Scheduling Timetable</h1>
-        <AddCourse/>
-      </div>
-
-      <div className="flex bg-gray-100 rounded-md p-1 mb-4">
+      <div className="flex bg-gray-100 rounded-md p-1">
         <Button
           variant={viewType === "room" ? "default" : "ghost"}
           className={viewType === "room" ? "bg-amber-500 hover:bg-amber-600" : ""}
@@ -48,6 +42,5 @@ export default function TimetableHeader({
           By student group
         </Button>
       </div>
-    </div>
   )
 }
