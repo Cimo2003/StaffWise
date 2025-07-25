@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
-import { Course, Group, MyUser, Room, Subject, User } from "@/lib/types"
+import { MyUser, Semester} from "@/lib/types"
 import { getToken } from "@/api/auth"
 import { getFacultyGroups } from "@/api/groups"
 import { getFacultySubjects } from "@/api/subjects"
@@ -31,14 +31,15 @@ function Loading() {
 export default async function Page() {
   const { faculty_id }: MyUser = await getToken()
   if(faculty_id){
-    const [rooms, teachers, groups, subjects, timeSlots, initialCourses, currentSemester] = await Promise.all([
+    const currentSemester: Semester = await getCurrentSemester(faculty_id)
+    if(!currentSemester) redirect("/dashboard")
+    const [rooms, teachers, groups, subjects, timeSlots, initialCourses] = await Promise.all([
       getFacultyRooms(faculty_id),
       getFacultyTeachers(faculty_id),
       getFacultyGroups(faculty_id),
       getFacultySubjects(faculty_id),
       getTimeSlots(),
       getCurrentSemesterCourses(faculty_id),
-      getCurrentSemester(faculty_id)
     ])
       return (
         <DataProvider semesterId={currentSemester?.id} rooms={rooms} groups={groups} subjects={subjects} teachers={teachers}>

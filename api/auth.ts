@@ -112,7 +112,7 @@ export async function resetPassword(formData:FormData) {
 export async function refreshToken() {
   const refreshToken = (await cookies()).get('refresh-token')?.value
   try {
-    const res = await axios.post("${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token", { refreshToken: refreshToken });
+    const res = await axiosInstance.post(`/auth/refresh-token`, { refreshToken: refreshToken });
     if(res.status===200){
       const accessToken = res.data['access-token'];
       (await cookies()).set("access-token", accessToken, { httpOnly: true });

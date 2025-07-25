@@ -17,19 +17,18 @@ export const metadata: Metadata = {
   export default async function Page() {
       const { faculty_id }: MyUser = await getToken()
       if(faculty_id){
-          const currentSemesterPromise: Promise<Semester> = getCurrentSemester(faculty_id)
+          const currentSemester: Semester = await getCurrentSemester(faculty_id)
+          if(!currentSemester) redirect("/dashboard")
           const groupsPromise: Promise<Group[]> = getFacultyGroups(faculty_id)
           const subjectsPromise: Promise<Subject[]> = getFacultySubjects(faculty_id)
           const teachersPromise: Promise<User[]> = getFacultyTeachers(faculty_id)
           const coursesPromise: Promise<Course[]> = getCurrentSemesterCourses(faculty_id)
           const [ 
-            currentSemester,
             groups,
             subjects,
             teachers,
             courses
            ] = await Promise.all([
-            currentSemesterPromise,
             groupsPromise,
             subjectsPromise,
             teachersPromise,

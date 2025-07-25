@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import axios from "axios";
 import { isTokenExpired } from './lib/isTokenExpired';
 import { logout } from './api/auth';
+import { axiosInstance } from './api/axios';
 
 
 export async function middleware(request: NextRequest) {
@@ -19,7 +19,7 @@ export async function middleware(request: NextRequest) {
       if (await isTokenExpired(token)===true) {
         const refreshToken = request.cookies.get('refresh-token')?.value
         try {
-          const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, { refreshToken: refreshToken });
+          const res = await axiosInstance.post(`/auth/refresh-token`, { refreshToken: refreshToken });
           if(res.status===200){
             const accessToken = res.data['access-token'];
             const response = NextResponse.next();
