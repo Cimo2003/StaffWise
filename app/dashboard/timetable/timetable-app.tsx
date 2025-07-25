@@ -17,7 +17,6 @@ interface TimetableAppProps {
   rooms: Room[]
   teachers: User[]
   groups: Group[]
-  subjects: Subject[]
   timeSlots: Timeslot[]
   courses: Course[]
   setCourses: React.Dispatch<React.SetStateAction<Course[]>>
@@ -29,7 +28,6 @@ export default function TimetableApp({
   rooms,
   teachers,
   groups,
-  subjects,
   timeSlots,
   courses,
   setCourses,
@@ -113,13 +111,13 @@ export default function TimetableApp({
         />
       </div>
       <h2 className="text-lg font-semibold mb-3">Timetable</h2>
-      <div className="flex items-center justify-between gap-2 w-full mb-4 bg-gray-100 rounded-md">
+      <div className="grid md:flex items-center justify-between gap-2 w-full mb-4 bg-white rounded-md">
           <TimetableHeader
             viewType={viewType}
             setViewType={setViewType}
             isLoading={isLoading}
           />
-          <div className="flex gap-2 px-4">
+          <div className="flex gap-2 px-2">
             <Generate onGenerate={handleAssignAll}/>
             <UnassignAll onUnassign={handleAssignAll}/>
             <ExportButton2

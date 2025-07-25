@@ -41,13 +41,12 @@ export default async function Page() {
       getCurrentSemester(faculty_id)
     ])
       return (
-        <DataProvider semesterId={currentSemester.id} rooms={rooms} groups={groups} subjects={subjects} teachers={teachers}>
+        <DataProvider semesterId={currentSemester?.id} rooms={rooms} groups={groups} subjects={subjects} teachers={teachers}>
         <Suspense fallback={<Loading />}>
           <TimetableAppWrapper
             initialRooms={rooms}
             initialTeachers={teachers}
             initialGroups={groups}
-            initialSubjects={subjects}
             initialTimeSlots={timeSlots}
             initialCourses={initialCourses}
           />

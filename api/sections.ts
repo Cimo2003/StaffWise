@@ -9,7 +9,6 @@ export async function getDepartmentSections(departmentId: number) {
         if(res.status===200) return res.data
         return []
     } catch (error) {
-        console.log(error)
         return []
     }
 }
@@ -20,7 +19,6 @@ export async function getFacultySections(facultyId: number) {
         if(res.status===200) return res.data
         return []
     } catch (error) {
-        console.log(error)
         return []
     }
 }
@@ -34,7 +32,6 @@ export async function createSection(data:any) {
         }
         return { success: false }
     } catch (error) {
-        console.log(error)
         return { success: false }
     }
 }
@@ -72,7 +69,6 @@ export async function importSections(data:any) {
     const formData = new FormData()
     formData.append("file", data.file[0])
     formData.append("facultyId", data.id)
-    console.log(formData.get("facultyId"))
     try{
         const res = await axiosInstance.post(`/sections/import`, formData, {
             headers: { 'Content-Type': 'multipart/form-data' }

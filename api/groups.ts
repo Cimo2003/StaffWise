@@ -9,7 +9,6 @@ export async function getSectionGroups(sectionId: number) {
         if(res.status===200) return res.data
         return []
     } catch (error) {
-        console.log(error)
         return []
     }
 }
@@ -20,13 +19,11 @@ export async function getFacultyGroups(facultyId: number) {
         if(res.status===200) return res.data
         return []
     } catch (error) {
-        console.log(error)
         return []
     }
 }
 
 export async function createGroup(data:any) {
-    console.log(data)
     try {
         const res = await axiosInstance.post(`/groups`, data)
         if(res.status===200){
@@ -35,7 +32,6 @@ export async function createGroup(data:any) {
         }
         return { success: false }
     } catch (error) {
-        console.log(error)
         return { success: false }
     }
 }

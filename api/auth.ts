@@ -12,35 +12,57 @@ export async function decrypt(input: string): Promise<any> {
   return payload;
 }
 
-export async function login(formData: FormData):Promise<any> {
+export async function login(formData: FormData): Promise<any> {
   const data = {
     username: formData.get("username"),
     password: formData.get("password")
   }
-  const res = await fetch('http://localhost:8085/auth/login', {
-    method: "POST",
-    headers: { 'Content-Type' : 'application/json' },
-    body: JSON.stringify(data)
-  })
-  const user = await res.json()
-
-  // Save the token in a cookie
-  if (res.ok) {
-    const cookieStore = await cookies();
-
-    // Store access-token and refresh-token in cookies
-    cookieStore.set('access-token', user['access-token'], {
-      path: '/',
-      httpOnly: true
-    });
-    cookieStore.set('refresh-token', user['refresh-token'], {
-      path: '/',
-      httpOnly: true
+  
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
     })
 
+    if (!res.ok) {
+      const error = await res.json()
+      return { success: false, error: error['error message'] || 'Login failed' }
+    }
+
+    const user = await res.json()
+    setAuthCookies(user)
     return { success: true }
-  } else {
-    return { success: false, error: user['error message']}
+  } catch (error) {
+    return { success: false, error: 'Network error' }
+  }
+}
+
+export async function oauthLogin(provider: string): Promise<void> {
+  // Redirect to backend OAuth endpoint
+  redirect(`${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/${provider}`)
+}
+
+async function setAuthCookies(tokens: { [key: string]: string }) {
+  const cookieStore = await cookies()
+  const { 'access-token': accessToken, 'refresh-token': refreshToken } = tokens
+
+  if (accessToken) {
+    cookieStore.set('access-token', accessToken, {
+      path: '/',
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax'
+    })
+  }
+
+  if (refreshToken) {
+    cookieStore.set('refresh-token', refreshToken, {
+      path: '/',
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax'
+    })
   }
 }
 
@@ -48,7 +70,7 @@ export async function logout() {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get('access-token')?.value
   const refreshToken = cookieStore.get('refresh-token')?.value
-  await fetch(`http://localhost:8085/auth/logout?accessToken=${accessToken}&refreshToken=${refreshToken}`)
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout?accessToken=${accessToken}&refreshToken=${refreshToken}`)
   cookieStore.delete("access-token")
   cookieStore.delete("refresh-token")
 }
@@ -90,7 +112,7 @@ export async function resetPassword(formData:FormData) {
 export async function refreshToken() {
   const refreshToken = (await cookies()).get('refresh-token')?.value
   try {
-    const res = await axios.post("http://localhost:8085/auth/refresh-token", { refreshToken: refreshToken });
+    const res = await axios.post("${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token", { refreshToken: refreshToken });
     if(res.status===200){
       const accessToken = res.data['access-token'];
       (await cookies()).set("access-token", accessToken, { httpOnly: true });
@@ -99,4 +121,24 @@ export async function refreshToken() {
       await logout()
       redirect("login")
   }
+}
+
+export async function handleOAuthCallback(request: Request) {
+  const url = new URL(request.url)
+  const token = url.searchParams.get('token')
+  
+  if (token) {
+    try {
+      const decoded = await decrypt(token)
+      await setAuthCookies({
+        'access-token': token,
+        'refresh-token': '' // You might get refresh token differently
+      })
+      return redirect('/dashboard')
+    } catch (error) {
+      console.error('Token decoding failed:', error)
+      return redirect('/login?error=invalid_token')
+    }
+  }
+  return redirect('/login')
 }

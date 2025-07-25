@@ -2,6 +2,7 @@ import { countTeacherCoursesForToday } from "@/api/courses"
 import { Card, CardContent } from "@/components/ui/card"
 import { MyUser } from "@/lib/types"
 import Link from "next/link"
+import TextType from "./ui/TextType"
 
 export default async function WelcomeCard({user}:{user: MyUser}) {
   const countCourses = await countTeacherCoursesForToday(user.user_id)
@@ -16,9 +17,25 @@ export default async function WelcomeCard({user}:{user: MyUser}) {
       <div className="absolute inset-0 bg-gradient-to-r from-black to-orange-500 opacity-70 rounded-md z-0" />
       <CardContent className="relative z-10 p-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between animate-fade-up animate-once">
-          <div>
-            <h2 className="text-2xl font-bold">Welcome back, Dr. {user.full_name}</h2>
-            <p className="mt-1 text-orange-100">You have {countCourses} classes scheduled for today</p>
+          <div className="grid">
+            <TextType 
+              text={`Welcome back, Dr. ${user.full_name}`}
+              typingSpeed={75}
+              pauseDuration={1500}
+              showCursor={false}
+              startOnVisible
+              cursorCharacter="|"
+              className="text-2xl font-bold"
+            />
+            <TextType 
+              text={`You have ${countCourses} classes scheduled for today`}
+              typingSpeed={100}
+              pauseDuration={1500}
+              showCursor={false}
+              startOnVisible={true}
+              cursorCharacter="|"
+              className="text-2xs mt-1 text-orange-100"
+            />
           </div>
 
           {user.role.find(r => r.authority === "TEACHER") !== undefined && (

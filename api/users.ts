@@ -3,14 +3,12 @@ import { revalidatePath } from "next/cache"
 import { axiosInstance } from "./axios"
 
 export async function register(data:any) {
-    console.log(data)
     try{
-        const res = await fetch("http://localhost:8085/users/register", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/register`, {
             method: "POST",
             headers: { 'Content-Type' : 'application/json' },
             body: JSON.stringify(data)
         })
-        console.log(res.status)
         if(res.ok) {
             revalidatePath("/")
             return { success: true }
@@ -18,7 +16,6 @@ export async function register(data:any) {
         return { success: false }
     }
     catch (e) {
-        console.log(e)
         return { success: false }
     }
 }

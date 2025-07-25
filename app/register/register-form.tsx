@@ -1,5 +1,6 @@
 "use client"
 
+import { oauthLogin } from "@/api/auth"
 import { register } from "@/api/users"
 import { SubmitButton2 } from "@/components/submit-button"
 import { Button } from "@/components/ui/button"
@@ -45,112 +46,113 @@ export default function RegisterForm(){
     else toast.error("registration failed")
   }
 
-  return <Form {...form}>
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-      <div className="grid md:grid-cols-2 gap-4">
-        <FormField
-          control={form.control}
-          name="firstName"
-          render={({ field }) => (
-            <FormItem>
-              <Label htmlFor="first-name">First Name</Label>
-              <FormControl>
-                <Input
-                  {...field}
-                  placeholder="Enter your first name"
-                  className="border-[#ced4da] focus:ring-[#4f46e5]"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormItem>
-              <Label htmlFor="last-name">Last Name</Label>
-              <FormControl>
-                <Input
-                  {...field}
-                  placeholder="Enter your last name"
-                  className="border-[#ced4da] focus:ring-[#4f46e5]"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <Label htmlFor="email">Email Address</Label>
-              <FormControl>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[#9ca3af]" />
+  return <div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <div className="grid md:grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormItem>
+                <Label htmlFor="first-name">First Name</Label>
+                <FormControl>
                   <Input
                     {...field}
-                    type="email"
-                    placeholder="Enter your email"
-                    className="pl-10 border-[#ced4da] focus:ring-[#4f46e5]"
+                    placeholder="Enter your first name"
+                    className="border-[#ced4da] focus:ring-[#4f46e5]"
                   />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem >
-              <Label htmlFor="password">Password</Label>
-              <FormControl>
-                <div className="relative">
-                  {visible ? (
-                    <EyeOff 
-                      onClick={() => setVisible(false)} 
-                      className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[#9ca3af] hover:cursor-pointer"
-                    />
-                  ) : (
-                    <Eye 
-                      onClick={() => setVisible(true)} 
-                      className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[#9ca3af] hover:cursor-pointer" 
-                    />
-                  )}
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem>
+                <Label htmlFor="last-name">Last Name</Label>
+                <FormControl>
                   <Input
                     {...field}
-                    type={visible ? "text" : "password"}
-                    placeholder="Enter your password"
-                    className="pl-10 border-[#ced4da] focus:ring-[#4f46e5]"
+                    placeholder="Enter your last name"
+                    className="border-[#ced4da] focus:ring-[#4f46e5]"
                   />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <Label htmlFor="email">Email Address</Label>
+                <FormControl>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[#9ca3af]" />
+                    <Input
+                      {...field}
+                      type="email"
+                      placeholder="Enter your email"
+                      className="pl-10 border-[#ced4da] focus:ring-[#4f46e5]"
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-      <SubmitButton2 form={form} className="w-full bg-[#5c2f32] hover:bg-[#5c2f32]/90 text-white mt-4">
-        Sign Up
-      </SubmitButton2>
-
-      <div className="relative">
-        <Separator className="my-2" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="bg-white px-2 text-sm text-[#6b7280]">Or continue with</span>
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem >
+                <Label htmlFor="password">Password</Label>
+                <FormControl>
+                  <div className="relative">
+                    {visible ? (
+                      <EyeOff 
+                        onClick={() => setVisible(false)} 
+                        className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[#9ca3af] hover:cursor-pointer"
+                      />
+                    ) : (
+                      <Eye 
+                        onClick={() => setVisible(true)} 
+                        className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[#9ca3af] hover:cursor-pointer" 
+                      />
+                    )}
+                    <Input
+                      {...field}
+                      type={visible ? "text" : "password"}
+                      placeholder="Enter your password"
+                      className="pl-10 border-[#ced4da] focus:ring-[#4f46e5]"
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
+
+        <SubmitButton2 form={form} className="w-full bg-[#5c2f32] hover:bg-[#5c2f32]/90 text-white mt-4">
+          Sign Up
+        </SubmitButton2>
+      </form>
+    </Form>
+    <div className="space-y-2">
+      <Separator className="my-2" />
+      <div className="inset-0 flex items-center justify-center">
+        <span className="bg-white px-2 text-sm text-[#6b7280]">Or continue with</span>
       </div>
 
-      <Button type="button" variant="outline" className="w-full border-[#ced4da] bg-white">
+      <Button onClick={() => oauthLogin('google')} variant="outline" className="w-full border-[#ced4da] bg-white mb-4">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" className="mr-2">
           <path
             fill="#EA4335"
@@ -178,6 +180,6 @@ export default function RegisterForm(){
           Sign in
         </Link>
       </div>
-    </form>
-  </Form>
+    </div>
+  </div>
 }

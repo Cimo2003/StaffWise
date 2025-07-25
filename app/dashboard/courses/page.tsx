@@ -36,9 +36,9 @@ export const metadata: Metadata = {
             coursesPromise
            ])
           return (
-              <DataProvider semesterId={currentSemester.id} groups={groups} subjects={subjects} teachers={teachers}>
-                  <TableWrapper data={courses} />
-              </DataProvider>
+            <DataProvider semesterId={currentSemester?.id} groups={groups} subjects={subjects} teachers={teachers}>
+                <TableWrapper data={courses} />
+            </DataProvider>
           )
       }
       else redirect("/dashboard")

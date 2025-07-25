@@ -6,6 +6,6 @@ export async function getTimeSlots() {
         if(res.status===200) return res.data
         return []
     } catch (error) {
-        console.log(error)
+        return []
     }
 }

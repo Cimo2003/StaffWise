@@ -122,7 +122,7 @@ export default function Home() {
           <div className="container mx-auto px-6 text-center">
             <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Institutionaposs Scheduling?</h2>
             <p className="text-gray-700 mb-8 max-w-2xl mx-auto">
-              Join hundreds of institutions already using SchedulePro
+              Join hundreds of institutions already using StaffWise
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link href="/register" className="bg-primary text-white px-6 py-3 rounded hover:bg-primary/90 transition-colors">
@@ -141,7 +141,7 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <h3 className="font-semibold text-lg mb-4">SchedulePro</h3>
+              <h3 className="font-semibold text-lg mb-4">StaffWise</h3>
               <p className="text-gray-400 text-sm">Modern educational scheduling for the modern era.</p>
             </div>
             <div>
@@ -213,7 +213,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
-            © 2023 SchedulePro. All rights reserved.
+            © 2025 StaffWise. All rights reserved.
           </div>
         </div>
       </footer>

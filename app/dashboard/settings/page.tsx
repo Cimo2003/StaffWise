@@ -1,4 +1,3 @@
-import { User, Bell, Shield } from "lucide-react"
 import SecuritySettings from "./password-reset"
 
 export default function SettingsPage() {

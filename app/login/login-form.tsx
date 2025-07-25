@@ -1,6 +1,6 @@
 "use client"
 
-import { login } from "@/api/auth"
+import { login, oauthLogin } from "@/api/auth"
 import { SubmitButton } from "@/components/submit-button"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -13,9 +13,9 @@ import { useState } from "react"
 import toast from "react-hot-toast"
 
 export default function LoginForm(){
-    const [visible, setVisible] = useState(false)
-
-    return <form action={async (formData:FormData)=>{
+  const [visible, setVisible] = useState(false)
+  return <div className="space-y-6">
+    <form action={async (formData:FormData)=>{
             const state = await login(formData)
             if(state.success) {
               toast.success("Signed in Successfully!")
@@ -60,15 +60,14 @@ export default function LoginForm(){
       <SubmitButton className="w-full bg-[#5c2f32] hover:bg-[#5c2f32]/90 text-white mt-4">
         Sign In
       </SubmitButton>
-
-      <div className="relative">
-        <Separator className="my-2" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="bg-white px-2 text-sm text-[#6b7280]">Or continue with</span>
-        </div>
+    </form>
+    <div className="space-y-2">
+      <Separator className="my-2" />
+      <div className="inset-0 flex items-center justify-center">
+        <span className="bg-white px-2 text-sm text-[#6b7280]">Or continue with</span>
       </div>
 
-      <Button variant="outline" className="w-full border-[#ced4da] bg-white">
+      <Button onClick={() => oauthLogin('google')} variant="outline" className="w-full border-[#ced4da] bg-white mb-4">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" className="mr-2">
           <path
             fill="#EA4335"
@@ -96,6 +95,7 @@ export default function LoginForm(){
           Sign up
         </Link>
       </div>
-    </form>
+    </div>
+  </div>
 
 }

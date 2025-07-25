@@ -1,6 +1,7 @@
 import type React from "react"
 import { Building2, BookOpen, School, Users, BookOpenText } from "lucide-react"
 import { countActiveFacultyCourses, countFacultyDepartments, countFacultyGroups, countFacultyRooms, countFacultySections, countFacultySubjects, countFacultyTeachers } from "@/api/faculty"
+import CountUp from "./ui/CountUp"
 
 export async function StatsCards({facultyId}: {facultyId: number}) {
   const [
@@ -37,7 +38,7 @@ export async function StatsCards({facultyId}: {facultyId: number}) {
           <StatCard
             key={s.title}
             title={s.title}
-            value={s.value.toString()}
+            value={s.value}
             icon={s.icon}
             bgColor={`bg-[${s.bgColor}]`}
           />
@@ -50,7 +51,7 @@ export async function StatsCards({facultyId}: {facultyId: number}) {
 
 interface StatCardProps {
   title: string
-  value: string
+  value: number
   icon: React.ReactNode
   bgColor: string
 }
@@ -60,7 +61,16 @@ function StatCard({ title, value, icon, bgColor }: StatCardProps) {
     <div className="bg-white rounded-lg shadow-sm p-4 flex justify-between items-center animate-fade-left animate-once">
       <div>
         <p className="text-[#6b7280] text-sm">{title}</p>
-        <h3 className="text-2xl font-bold mt-1">{value}</h3>
+        <h3 className="text-2xl font-bold mt-1">
+          <CountUp
+            from={0}
+            to={value}
+            separator=","
+            direction="up"
+            duration={0.8}
+            className="count-up-text"
+          />
+        </h3>
       </div>
       <div className={`w-12 h-12 ${bgColor} rounded-lg flex items-center justify-center`}>{icon}</div>
     </div>

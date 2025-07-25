@@ -19,7 +19,7 @@ export async function middleware(request: NextRequest) {
       if (await isTokenExpired(token)===true) {
         const refreshToken = request.cookies.get('refresh-token')?.value
         try {
-          const res = await axios.post("http://localhost:8085/auth/refresh-token", { refreshToken: refreshToken });
+          const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, { refreshToken: refreshToken });
           if(res.status===200){
             const accessToken = res.data['access-token'];
             const response = NextResponse.next();

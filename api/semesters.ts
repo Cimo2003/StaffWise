@@ -9,7 +9,6 @@ export async function getFacultySemesters(facultyId: number) {
         if(res.status===200) return res.data
         return []
     } catch (error) {
-        console.log(error)
         return []
     }
 }
@@ -19,7 +18,7 @@ export async function getCurrentSemester(facultyId:number) {
         const res = await axiosInstance.get(`/semesters/faculties/${facultyId}/current`)
         if(res.status===200) return res.data
     } catch (error) {
-        console.log(error)
+        return null
     }
 }
 
@@ -32,7 +31,6 @@ export async function createSemester(data:any) {
         }
         return { success: false }
     } catch (error) {
-        console.log(error)
         return { success: false }
     }
 }

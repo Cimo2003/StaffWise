@@ -10,7 +10,6 @@ interface TimetableAppWrapperProps {
   initialRooms: Room[]
   initialTeachers: User[]
   initialGroups: Group[]
-  initialSubjects: Subject[]
   initialTimeSlots: Timeslot[]
   initialCourses: Course[]
 }
@@ -19,14 +18,12 @@ export default function TimetableAppWrapper({
   initialRooms,
   initialTeachers,
   initialGroups,
-  initialSubjects,
   initialTimeSlots,
   initialCourses,
 }: TimetableAppWrapperProps) {
   const [rooms] = useState<Room[]>(initialRooms)
   const [teachers] = useState<User[]>(initialTeachers)
   const [groups] = useState<Group[]>(initialGroups)
-  const [subjects] = useState<Subject[]>(initialSubjects)
   const [timeSlots] = useState<Timeslot[]>(initialTimeSlots)
   const [courses, setCourses] = useState<Course[]>(initialCourses)
   const [isLoading, setIsLoading] = useState(false)
@@ -92,7 +89,6 @@ export default function TimetableAppWrapper({
       rooms={rooms}
       teachers={teachers}
       groups={groups}
-      subjects={subjects}
       timeSlots={timeSlots}
       courses={courses}
       setCourses={setCourses}

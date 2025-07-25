@@ -9,7 +9,6 @@ export async function getFacultyRooms(facultyId: number) {
         if(res.status===200) return res.data
         return []
     } catch (error) {
-        console.log(error)
         return []
     }
 }
@@ -23,7 +22,6 @@ export async function createRoom(data:any) {
         }
         return { success: false }
     } catch (error) {
-        console.log(error)
         return { success: false }
     }
 }

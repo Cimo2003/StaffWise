@@ -219,7 +219,7 @@ export default function TimetableView({
                   ? (row as User).fullName
                   : viewType === "room"
                     ? (row as Room).code
-                    : (row as Group).code}
+                    : `${(row as Group).code}-${(row as Group).section.name}`}
               </th>
 
               {days.map((day) => {

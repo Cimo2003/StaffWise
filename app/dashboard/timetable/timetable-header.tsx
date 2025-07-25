@@ -16,7 +16,7 @@ export default function TimetableHeader({
   isLoading = false,
 }: TimetableHeaderProps) {
   return (
-      <div className="flex bg-gray-100 rounded-md p-1">
+      <div className="flex bg-white rounded-md gap-2 p-2">
         <Button
           variant={viewType === "room" ? "default" : "ghost"}
           className={viewType === "room" ? "bg-amber-500 hover:bg-amber-600" : ""}

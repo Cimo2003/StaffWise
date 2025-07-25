@@ -10,7 +10,6 @@ export async function getSemesterCourses(semesterId: number) {
         if(res.status===200) return res.data
         return []
     } catch (error) {
-        console.log(error)
         return []
     }
 }
@@ -21,7 +20,6 @@ export async function getTeacherSchedule(teacerId: number, semesterId: number) {
         if(res.status===200) return res.data
         return []
     } catch (error) {
-        console.log(error)
         return []
     }
 }
@@ -32,7 +30,6 @@ export async function countTeacherCoursesForToday(teacerId: number) {
         if(res.status===200) return res.data
         return 0
     } catch (error) {
-        console.log(error)
         return 0
     }
 }
@@ -43,7 +40,6 @@ export async function getCurrentSemesterCourses(facultyId: number) {
         if(res.status===200) return res.data
         return []
     } catch (error) {
-        console.log(error)
         return []
     }
 }
@@ -57,7 +53,6 @@ export async function createCourse(data: any) {
         }
         return { success: false }
     } catch (error) {
-        console.log(error)
         return { success: false }
     }
 }
@@ -71,7 +66,6 @@ export async function updateCourse(data: any) {
         }
         return { success: false }
     } catch (error) {
-        console.log(error)
         return { success: false }
     }
 }
@@ -85,7 +79,6 @@ export async function unassignAll(semesterId:number) {
         }
         return { success: false }
     } catch (error) {
-        console.log(error)
         return { success: false }
     }
 }
@@ -111,7 +104,6 @@ export async function deleteCourse(id: number) {
         }
         return { success: false }
     } catch (error) {
-        console.log(error)
         return { success: false }
     }
 }
